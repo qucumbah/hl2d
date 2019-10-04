@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\WebsocketServer">
+      <UniqueIdentifier>{59c978b6-6da1-4ce5-8010-65ef51784ede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\WebsocketServer">
+      <UniqueIdentifier>{eb7d0d48-d778-471d-94e5-a1eb6734e579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{1024cbef-1488-45f0-ab10-0c6e20e897eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{8eac5134-58b7-49f1-813b-5c210cea65a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{71d3fe29-44f8-4d9c-88b1-c46de9760531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{2e1c6377-9e1a-4516-8935-5aad66862494}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Entities">
+      <UniqueIdentifier>{e1ea5f97-7094-44e3-8b75-edf73f287497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entities">
+      <UniqueIdentifier>{5a0f983a-38e8-49bd-87a1-0bdaa84312cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Guns">
+      <UniqueIdentifier>{3737cf9e-e8d3-4be8-a2a4-a08fa2b4e9a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Guns">
+      <UniqueIdentifier>{6889cacc-c869-4563-b9fb-5e7ab60b6840}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebsocketServer.cpp">
+      <Filter>Source Files\WebsocketServer</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerAdapter.cpp">
+      <Filter>Source Files\WebsocketServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Source Files\WebsocketServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Rifle.cpp">
+      <Filter>Source Files\Game\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="Crowbar.cpp">
+      <Filter>Source Files\Game\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaHitter.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Hitter.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Socket.h">
+      <Filter>Header Files\WebsocketServer</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerAdapter.h">
+      <Filter>Header Files\WebsocketServer</Filter>
+    </ClInclude>
+    <ClInclude Include="WebsocketServer.h">
+      <Filter>Header Files\WebsocketServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitter.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.h">
+      <Filter>Header Files\Game\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="Rifle.h">
+      <Filter>Header Files\Game\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Hitter.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Crowbar.h">
+      <Filter>Header Files\Game\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaHitter.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

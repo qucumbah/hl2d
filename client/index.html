@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HL2D</title>
+    <script src="https://unpkg.com/@babel/standalone@7.4.4/babel.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <script>
+      Babel.registerPreset('react-with-import', {
+        presets: [
+          [Babel.availablePresets['es2017']],
+          [Babel.availablePresets['react']]
+        ],
+        plugins: [
+          [Babel.availablePlugins['transform-modules-umd']]
+        ]
+      });
+    </script>
+
+    <script type="text/babel" src="/js/components/Button.js" data-presets="react-with-import"></script>
+    <script type="text/babel" src="/js/components/Connect.js" data-presets="react-with-import"></script>
+    <script type="text/babel" src="/js/components/Player.js" data-presets="react-with-import"></script>
+    <script type="text/babel" src="/js/components/Game.js" data-presets="react-with-import"></script>
+    <script type="text/babel" src="/js/components/App.js" data-presets="react-with-import"></script>
+    <script type="text/babel" src="/js/index.js" data-presets="react-with-import"></script>
+
+    <link rel="stylesheet/less" type="text/less" href="/less/main.less">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
