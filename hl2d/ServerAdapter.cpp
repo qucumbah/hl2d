@@ -65,6 +65,18 @@ void ServerAdapter::_handleRequest(int clientId, string message) {
 void ServerAdapter::_tick() {
 	string gameState = this->_game.getJson();
 	this->_wss.sendMessageAll(gameState);
-	this->_game.update(_queuedInputs);
+
+	//This little bit of code caused around 10% of all packages to disappear
+	//This is how it looked before:
+	//
+	//this->_game.update(_queuedInputs);
+	//_queuedInputs = new map<int, string>();
+	//
+	//While the game was updating clients would still send messages, but these
+	//messages would get skipped because queued inputs would be cleaned after
+	//update.
+	//After this simple there is much less lost packages
+	auto inputs = _queuedInputs;
 	_queuedInputs = new map<int, string>();
+	this->_game.update(inputs);
 }
