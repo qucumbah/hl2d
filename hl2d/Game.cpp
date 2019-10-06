@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Player.h"
+#include "util.h"
 
 #include <iostream>
 
@@ -10,7 +11,7 @@ using std::cout;
 using std::endl;
 
 Game::Game() {
-	
+	_map = new Map("a");
 }
 
 Game::~Game() {
@@ -64,8 +65,7 @@ void Game::removeEntity(Entity* entity) {
 }
 
 void Game::respawnPlayer(Player* player) {
-	Map::Location spawnLocation = _map->getBestSpawnLocation();
-	player->respawn(spawnLocation.x, spawnLocation.y);
+	player->respawn(0, 0);
 }
 
 string Game::getMapJson() {
@@ -78,6 +78,15 @@ string Game::getJson() {
 	int elementNumber = 1;
 	int size = _entities.size();
 
+	list<string> entities;
+	for (Entity* entity : _entities) {
+		entities.push_back( entity->getJson() );
+	}
+
+	return util::createJsonArray(entities);
+
+	/*
+	//Uncomment if you need some performance
 	result << "[";
 	for (Entity* entity : _entities) {
 		result << entity->getJson();
@@ -91,6 +100,7 @@ string Game::getJson() {
 	result << "]";
 
 	return result.str();
+	*/
 }
 
 void Game::update(map<int, string>* playerActions) {
@@ -99,6 +109,7 @@ void Game::update(map<int, string>* playerActions) {
 	for (Entity* entity : _entities) {
 		if (entity->isDestroyed()) {
 			removeEntity(entity);
+			continue;
 		}
 
 		if (entity->getType() == "Player") {

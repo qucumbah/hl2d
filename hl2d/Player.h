@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Gun.h"
 #include "Hitter.h"
+#include "Vec2.h"
 
 #include <string>
 
@@ -16,6 +17,8 @@ public:
 	static const int DISCONNECTED = 3;
 
 	static const int MAX_HEALTH = 100;
+	static const int MOVEMENT_SPEED = 1;
+	static const int PLAYER_RADIUS = 10;
 
 	Player(int id);
 	~Player();
@@ -57,5 +60,10 @@ private:
 	void _updateCrosshairPosition(int x, int y);
 	void _handleAction(int actionCode);
 	void _updateRotation();
-	void _move();
+
+	Vec2 _getMovementVector(Map* map);
+	void _move(Vec2 movement);
+
+	//stability test
+	int _lastNumber = 0;
 };

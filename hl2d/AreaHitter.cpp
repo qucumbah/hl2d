@@ -30,5 +30,7 @@ void AreaHitter::update(
 }
 
 bool AreaHitter::_canHit(Player* player) {
-	return true;
+	cout << _creatorId << player->getId() << endl;
+	//return player->getId() != _creatorId;
+	return false;
 }

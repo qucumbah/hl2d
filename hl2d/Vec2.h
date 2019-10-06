@@ -9,6 +9,10 @@ class Vec2 {
 public:
 	const double x, y;
 
+	static double getIntersectionCoefficient(Vec2 p, Vec2 m, Vec2 w, Vec2 b) {
+		return ((w - p) ^ b) / (m ^ b);
+	}
+
 	Vec2(double _x, double _y) : x(_x), y(_y) {
 
 	}
@@ -18,7 +22,17 @@ public:
 	}
 
 	Vec2 normal() {
+		if (this->length() == 0) {
+			return Vec2(0, 0);
+		}
 		return *this / this->length();
+	}
+
+	Vec2 perpendicularClockwise() {
+		return Vec2(y, -x);
+	}
+	Vec2 perpendicularCounterClockwise() {
+		return Vec2(-y, x);
 	}
 
 	//Cross product

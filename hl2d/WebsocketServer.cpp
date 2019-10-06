@@ -41,6 +41,8 @@ void WebsocketServer::removeClient(int clientSocket) {
 		}
 		return equals;
 	});
+
+	_emit("clientDisconnect", clientSocket, "");
 }
 
 //Argument order is weird for historical reasons (means I'm too lazy to fix it)

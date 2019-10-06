@@ -13,8 +13,11 @@ class App extends React.Component {
       lastAdress: localStorage.getItem('lastAdress') || defaultAdress,
       lastName: localStorage.getItem('lastName') || 'Player',
       lastError: '',
+      map: null,
       playerId: -1,
       entities: null,
+      //stability test
+      counter: 0,
     };
 
     window.onbeforeunload = () => {
@@ -164,7 +167,10 @@ class App extends React.Component {
     }
 
     const message = (
+      //stability test
       'inputs\n' +
+      'stabilityTest\n' +
+      this.state.counter + '\n' +
       'crosshair\n' +
       crosshairPosition.x + '\n' +
       crosshairPosition.y + '\n' +
@@ -172,6 +178,9 @@ class App extends React.Component {
     );
 
     //console.log(message);
+
+    //console.log(this.state.counter + 1);
+    this.setState({ counter: this.state.counter + 1 });
 
     this.state.ws.send(message);
   }

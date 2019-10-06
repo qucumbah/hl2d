@@ -267,3 +267,24 @@ string util::createJson(map<string, string> pairs) {
 
 	return result.str();
 }
+
+string util::createJsonArray(list<string> elements) {
+	stringstream result;
+	result << "[";
+
+	int elementNumber = 1;
+	const int size = elements.size();
+	for (auto element : elements) {
+		result << element;
+
+		bool last = elementNumber == size;
+		if (!last) {
+			result << ",";
+		}
+		elementNumber++;
+	}
+
+	result << "]";
+
+	return result.str();
+}

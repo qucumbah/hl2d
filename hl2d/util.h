@@ -2,9 +2,11 @@
 
 #include <string>
 #include <map>
+#include <list>
 
 using std::string;
 using std::map;
+using std::list;
 
 namespace util {
 	string SHA1(string input);
@@ -14,4 +16,5 @@ namespace util {
 	void cleanWinsock();
 
 	string createJson(map<string, string> pairs);
+	string createJsonArray(list<string> elements);
 }
