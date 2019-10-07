@@ -114,7 +114,12 @@ void Game::update(map<int, string>* playerActions) {
 
 		if (entity->getType() == "Player") {
 			string thisPlayerActions = (*playerActions)[entity->getId()];
-			entity->update(_map, &_entitiesBuffer, thisPlayerActions);
+
+			Player* player = (Player*)entity;
+			player->update(_map, &_entitiesBuffer, thisPlayerActions);
+			if (!player->isAlive()) {
+				respawnPlayer(player);
+			}
 		}
 		else {
 			entity->update(_map, &_entitiesBuffer, "");

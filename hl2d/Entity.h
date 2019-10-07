@@ -38,6 +38,20 @@ public:
 	void destroy() {
 		_destroyed = true;
 	}
+
+	double getX() {
+		return _x;
+	}
+	double getY() {
+		return _y;
+	}
+	double getAngle() {
+		return _angle;
+	}
+
+	Vec2 getPosition() {
+		return Vec2(_x, _y);
+	}
 protected:
 	string _type;
 	int _id;

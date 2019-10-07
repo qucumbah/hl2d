@@ -1,19 +1,14 @@
 #include "AreaHitter.h"
 
-void AreaHitter::activate(
-	double x,
-	double y,
-	double angle,
-	int creatorId
-) {
+void AreaHitter::activate(Player* player) {
 	_type = "AreaHitter";
 	_id = _nextId++;
-
-	_x = x;
-	_y = y;
-	_angle = angle;
+	
+	_x = player->getX();
+	_y = player->getY();
+	_angle = player->getAngle();
 	_renderable = true;
-	_creatorId = creatorId;
+	_creatorId = player->getId();
 }
 
 void AreaHitter::update(
@@ -36,6 +31,27 @@ void AreaHitter::update(
 }
 
 bool AreaHitter::_canHit(Player* player) {
-	cout << _creatorId << player->getId() << endl;
-	return player->getId() != _creatorId;
+	//AreaHitters hits everyone except it's creator in semicircle aimed at the
+	//creator's view direction
+	if (player->getId() == _creatorId) {
+		return false;
+	}
+
+	Vec2 relativePosition = player->getPosition() - this->getPosition();
+
+	if (relativePosition.length() > RANGE) {
+		//Player is too far
+		return false;
+	}
+
+	double dx = cos(_angle);
+	double dy = sin(_angle);
+	Vec2 hitDirectionNormal = Vec2(dx, dy);
+
+	if (relativePosition * hitDirectionNormal < 0) {
+		//Player is behind
+		return false;
+	}
+
+	return true;
 }

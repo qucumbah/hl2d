@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Entity.h"
 #include "Map.h"
 #include "Gun.h"
@@ -62,7 +63,7 @@ private:
 	void _updateRotation();
 
 	Vec2 _getMovement();
-	Vec2 _getLargestBounce(Map* map);
+	Vec2 _getLargestBounce(Vec2 movement, Map* map);
 	Vec2 _getBounce(Vec2 playerPosition, Map::Edge edge);
 	void _move(Vec2 movement);
 

@@ -131,7 +131,7 @@ void Player::update(Map* map,
 	_updateRotation();
 
 	Vec2 movement = _getMovement();
-	Vec2 bounce = _getLargestBounce(map);
+	Vec2 bounce = _getLargestBounce(movement, map);
 
 	_move(movement + bounce);
 }
@@ -177,7 +177,7 @@ void Player::respawn(double x, double y) {
 }
 
 void Player::shoot(Hitter* hitter) {
-	hitter->activate(_x, _y, _angle, _id);
+	hitter->activate(this);
 	_shotHitters.push_back(hitter);
 }
 
@@ -277,12 +277,15 @@ Vec2 Player::_getMovement() {
 	return movement;
 }
 
-Vec2 Player::_getLargestBounce(Map* map) {
+Vec2 Player::_getLargestBounce(Vec2 movement, Map* map) {
 	//Here we need to find the largest bounce
 	//We need it because after the player has moved he can be inside an edge
 	//and we need to push him out by 'bouncing' him back
+	//We only need the largest one because we can deal with the rest on the
+	//next ticks; If we try to bounce all of them at the same time we can get
+	//into an infinite loop (e.g. player is pinched between 2 walls)
 	Vec2* largestBounce = new Vec2(0, 0); //For comparisons
-	Vec2 playerPosition = Vec2(_x, _y);
+	Vec2 playerPosition = Vec2(_x, _y) + movement;
 
 	list<Map::Edge> edges = map->getEdges();
 

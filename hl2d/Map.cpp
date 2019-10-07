@@ -70,15 +70,8 @@ Map::Map(string mapName) {
 
 	mapFile.close();
 
-	//For debug
-	//_edges.clear();
-	//_edges.push_back(Map::Edge(Vec2(50, 50), Vec2(0, 50)));
-	//_edges.push_back(Map::Edge(Vec2(50, 150), Vec2(0, 50)));
-	//_edges.push_back(Map::Edge(Vec2(50, 250), Vec2(0, 50)));
-
-	//_edges.push_back(Map::Edge(Vec2(50, 100), Vec2(50, 0)));
-	//_edges.push_back(Map::Edge(Vec2(100, 100), Vec2(0, -50)));
-	//_edges.push_back(Map::Edge(Vec2(100, 50), Vec2(-50, 0)));
+	//Can support diagonal walls; might use later
+	//_edges.push_back(Map::Edge(Vec2(100, 100), Vec2(50, 50)));
 }
 
 Map::~Map() {
