@@ -83,26 +83,12 @@ class Game extends React.Component {
   handleKeyDown = event => {
     const keyCode = event.keyCode;
 
-    switch (keyboardMappings[keyCode]) {
-      case 1: console.log("+UP"); break;
-      case 2: console.log("+RIGHT"); break;
-      case 3: console.log("+DOWN"); break;
-      case 4: console.log("+LEFT"); break;
-    }
-
     if (keyboardMappings[keyCode]) {
       this.recordAction( +keyboardMappings[keyCode] );
     }
   }
   handleKeyUp = event => {
     const keyCode = event.keyCode;
-
-    switch (keyboardMappings[keyCode]) {
-      case 1: console.log("-UP"); break;
-      case 2: console.log("-RIGHT"); break;
-      case 3: console.log("-DOWN"); break;
-      case 4: console.log("-LEFT"); break;
-    }
 
     if (keyboardMappings[keyCode]) {
       this.recordAction( -keyboardMappings[keyCode] );

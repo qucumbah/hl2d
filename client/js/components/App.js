@@ -16,8 +16,6 @@ class App extends React.Component {
       map: null,
       playerId: -1,
       entities: null,
-      //stability test
-      counter: 0,
     };
 
     window.onbeforeunload = () => {
@@ -167,10 +165,7 @@ class App extends React.Component {
     }
 
     const message = (
-      //stability test
       'inputs\n' +
-      'stabilityTest\n' +
-      this.state.counter + '\n' +
       'crosshair\n' +
       crosshairPosition.x + '\n' +
       crosshairPosition.y + '\n' +

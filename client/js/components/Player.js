@@ -7,7 +7,9 @@ const Player = function(props) {
 
   const style = {
     display: (hp>0)?'block':'none',
-    transform: `translate(${x}px, ${y}px) rotate(${angle}rad)`,
+    transform: `translate(-50%, -50%) rotate(${angle}rad)`,
+    left: x + 'px',
+    top: y + 'px',
   };
 
   return (

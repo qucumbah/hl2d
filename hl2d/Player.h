@@ -18,7 +18,7 @@ public:
 
 	static const int MAX_HEALTH = 100;
 	static const int MOVEMENT_SPEED = 1;
-	static const int PLAYER_RADIUS = 10;
+	static const int PLAYER_RADIUS = 8;
 
 	Player(int id);
 	~Player();
@@ -61,7 +61,9 @@ private:
 	void _handleAction(int actionCode);
 	void _updateRotation();
 
-	Vec2 _getMovementVector(Map* map);
+	Vec2 _getMovement();
+	Vec2 _getLargestBounce(Map* map);
+	Vec2 _getBounce(Vec2 playerPosition, Map::Edge edge);
 	void _move(Vec2 movement);
 
 	//stability test

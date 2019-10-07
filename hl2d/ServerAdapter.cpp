@@ -75,7 +75,7 @@ void ServerAdapter::_tick() {
 	//While the game was updating clients would still send messages, but these
 	//messages would get skipped because queued inputs would be cleaned after
 	//update.
-	//After this simple there is much less lost packages
+	//After this simple fix there is much less lost packages
 	auto inputs = _queuedInputs;
 	_queuedInputs = new map<int, string>();
 	this->_game.update(inputs);

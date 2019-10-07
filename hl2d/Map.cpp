@@ -44,10 +44,16 @@ Map::Map(string mapName) {
 
 			//Add actual game bounds
 			//All perpendiculars face inside for simpler movement calculation
+			/*
 			_addEdge(x1, y1, x2, y1); //Top
 			_addEdge(x2, y1, x2, y2); //Right
 			_addEdge(x2, y2, x1, y2); //Bottom
 			_addEdge(x1, y2, x1, y1); //Left
+			*/
+			_addEdge(x1, y1, x1, y2);
+			_addEdge(x1, y2, x2, y2);
+			_addEdge(x2, y2, x2, y1);
+			_addEdge(x2, y1, x1, y1);
 		}
 		else if (token == "spawnLocation") {
 			mapFile >> x1 >> y1;
@@ -63,6 +69,16 @@ Map::Map(string mapName) {
 	_json = util::createJsonArray(walls);
 
 	mapFile.close();
+
+	//For debug
+	//_edges.clear();
+	//_edges.push_back(Map::Edge(Vec2(50, 50), Vec2(0, 50)));
+	//_edges.push_back(Map::Edge(Vec2(50, 150), Vec2(0, 50)));
+	//_edges.push_back(Map::Edge(Vec2(50, 250), Vec2(0, 50)));
+
+	//_edges.push_back(Map::Edge(Vec2(50, 100), Vec2(50, 0)));
+	//_edges.push_back(Map::Edge(Vec2(100, 100), Vec2(0, -50)));
+	//_edges.push_back(Map::Edge(Vec2(100, 50), Vec2(-50, 0)));
 }
 
 Map::~Map() {
@@ -84,6 +100,8 @@ list<Map::Location> Map::getSpawnLocations() {
 void Map::_addEdge(double x1, double y1, double x2, double y2) {
 	Vec2 start(x1, y1);
 	Vec2 body(x2 - x1, y2 - y1);
+
+	cout << start << body << endl;
 
 	_edges.push_back( Map::Edge(start, body) );
 }

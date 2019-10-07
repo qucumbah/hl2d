@@ -35,8 +35,8 @@ Player::Player(int id) {
 	_connectionStatus = CONNECTING;
 	_id = id;
 	_type = "Player";
-	_x = 0;
-	_y = 0;
+	_x = 100;
+	_y = 100;
 	_angle = 0;
 	_renderable = false;
 
@@ -96,6 +96,7 @@ void Player::update(Map* map,
 
 			_updateCrosshairPosition(x, y);
 		}
+		/*
 		else if (token == "stabilityTest") {
 			//stability test
 			int number;
@@ -109,6 +110,7 @@ void Player::update(Map* map,
 			}
 			_lastNumber++;
 		}
+		*/
 		else {
 			int actionCode = atoi( token.data() );
 			//atoi returns 0 if there was an error; We dont have action with
@@ -128,8 +130,10 @@ void Player::update(Map* map,
 
 	_updateRotation();
 
-	Vec2 movement = _getMovementVector(map);
-	_move(movement);
+	Vec2 movement = _getMovement();
+	Vec2 bounce = _getLargestBounce(map);
+
+	_move(movement + bounce);
 }
 
 string Player::getJson() {
@@ -173,7 +177,7 @@ void Player::respawn(double x, double y) {
 }
 
 void Player::shoot(Hitter* hitter) {
-	hitter->activate(_x, _y, _angle);
+	hitter->activate(_x, _y, _angle, _id);
 	_shotHitters.push_back(hitter);
 }
 
@@ -186,35 +190,27 @@ void Player::_handleAction(int actionCode) {
 	switch (actionCode) {
 	//Save all controlls, later they will be used to calculate movement vector
 	case +UP:
-		cout << "+UP" << endl;
 		_up = true;
 		break;
 	case +RIGHT:
-		cout << "+RIGHT" << endl;
 		_right = true;
 		break;
 	case +DOWN:
-		cout << "+DOWN" << endl;
 		_down = true;
 		break;
 	case +LEFT:
-		cout << "+LEFT" << endl;
 		_left = true;
 		break;
 	case -UP:
-		cout << "-UP" << endl;
 		_up = false;
 		break;
 	case -RIGHT:
-		cout << "-RIGHT" << endl;
 		_right = false;
 		break;
 	case -DOWN:
-		cout << "-DOWN" << endl;
 		_down = false;
 		break;
 	case -LEFT:
-		cout << "-LEFT" << endl;
 		_left = false;
 		break;
 	//Pull or release triggers of current gun, which will handle these actions
@@ -264,9 +260,7 @@ void Player::_updateRotation() {
 	_angle = (y>0) ? acos(x/r) : 2*PI-acos(x/r);
 }
 
-Vec2 Player::_getMovementVector(Map* map) {
-	//cout << _right << _left << _up << _down << endl;
-
+Vec2 Player::_getMovement() {
 	if (!_up && !_down && !_right && !_left) {
 		return Vec2(0, 0);
 	}
@@ -280,45 +274,74 @@ Vec2 Player::_getMovementVector(Map* map) {
 
 	Vec2 movement = Vec2(dx, dy).normal() * MOVEMENT_SPEED;
 
+	return movement;
+}
+
+Vec2 Player::_getLargestBounce(Map* map) {
+	//Here we need to find the largest bounce
+	//We need it because after the player has moved he can be inside an edge
+	//and we need to push him out by 'bouncing' him back
+	Vec2* largestBounce = new Vec2(0, 0); //For comparisons
+	Vec2 playerPosition = Vec2(_x, _y);
+
 	list<Map::Edge> edges = map->getEdges();
 
-	//Compiler is not happy with uninitialized pointers
-	Map::Edge* closestEdge = new Map::Edge(Vec2(0, 0), Vec2(0, 0));
-	//This is "k" in sketch 1
-	double closestEdgeCoefficient = 2;
 	for (auto edge : edges) {
-		//Get intersection point
-		//Closest point to wall on player's edge (player is a circle with radius
-		//PLAYER_RADIUS)
-		Vec2 p = edge.perpendicularNormal * PLAYER_RADIUS;
+		Vec2 bounce = _getBounce(playerPosition, edge);
 
-		//For details see sketch 2
-		double k = Vec2::getIntersectionCoefficient(
-			p,
-			movement,
-			edge.start,
-			edge.body
-		);
+		//cout << bounce << *largestBounce << (bounce > *largestBounce) << endl;
 
-		if (k < closestEdgeCoefficient) {
-			closestEdge = &edge;
-			closestEdgeCoefficient = k;
+		if (bounce > *largestBounce) {
+			largestBounce = new Vec2(bounce.x, bounce.y);
+			//cout << "replaced; new largest bounce: " << *largestBounce << endl;
 		}
 	}
 
-	return movement;
+	return *largestBounce;
+}
 
-	if (closestEdgeCoefficient > 1) {
-		//Clear movement path, no edges to collide with
-		return movement;
+Vec2 Player::_getBounce(Vec2 playerPosition, Map::Edge edge) {
+	//Algorithm of finding a bounce is described in sketch 1
+	Vec2 n = edge.perpendicularNormal * PLAYER_RADIUS;
+
+	if (Vec2::isFacing(playerPosition, n, edge.start, edge.body)) {
+		double k = Vec2::getIntersectionCoefficient(
+			playerPosition, n, edge.start, edge.body
+		);
+
+		//cout << "is facing; ";
+
+		if (k >= 1 || k <= 0) {
+			//Not inside or too much inside
+			//cout << "Not inside or too much inside" << endl;
+			return Vec2(0, 0);
+		}
+
+		//cout << "Touching edge; result: " << n * (k - 1) << endl;
+
+		return n * (k - 1);
 	}
 	else {
-		//Path obstructed, have to correct it; see sketch 2
-		Vec2 finalMovement =
-			(closestEdgeCoefficient * movement) +
-			(((1 - closestEdgeCoefficient) * movement) * closestEdge->body) *
-			((Vec2)closestEdge->body).normal();
-		return finalMovement;
+		//This is not shown in sketch 1, but it should be obvious that
+		//w is the closest end point of an edge relative to player
+		//so d is the distance from player to the closest end point of the edge
+		Vec2 d1 = edge.start - playerPosition;
+		Vec2 d2 = edge.start + edge.body - playerPosition;
+		Vec2 d = (d1 < d2) ? d1 : d2;
+
+		//cout << "isn't facing; ";
+
+		if (d.length() > PLAYER_RADIUS) {
+			//Not touching any end point of the edge
+			//cout << "Not touching any end point of the edge" << endl;
+			return Vec2(0, 0);
+		}
+
+		Vec2 r = d.normal() * PLAYER_RADIUS;
+
+		//cout << "Touching end of the edge; result: " << d - r << endl;
+
+		return d - r;
 	}
 }
 

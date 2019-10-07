@@ -8,7 +8,14 @@
 class AreaHitter : public Hitter {
 public:
 	static const int DAMAGE = 25;
-	virtual void activate(double x, double y, double angle) override;
+	static const int RANGE = 10;
+	virtual void activate(
+		double x,
+		double y,
+		double angle,
+		int creatorId
+	) override;
+
 	virtual void update(
 		Map* map,
 		list<Entity*>* entities,

@@ -1,6 +1,11 @@
 #include "AreaHitter.h"
 
-void AreaHitter::activate(double x, double y, double angle) {
+void AreaHitter::activate(
+	double x,
+	double y,
+	double angle,
+	int creatorId
+) {
 	_type = "AreaHitter";
 	_id = _nextId++;
 
@@ -8,6 +13,7 @@ void AreaHitter::activate(double x, double y, double angle) {
 	_y = y;
 	_angle = angle;
 	_renderable = true;
+	_creatorId = creatorId;
 }
 
 void AreaHitter::update(
@@ -31,6 +37,5 @@ void AreaHitter::update(
 
 bool AreaHitter::_canHit(Player* player) {
 	cout << _creatorId << player->getId() << endl;
-	//return player->getId() != _creatorId;
-	return false;
+	return player->getId() != _creatorId;
 }

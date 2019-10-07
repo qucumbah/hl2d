@@ -22,16 +22,20 @@ body {
   .player {
     position: absolute;
     background-color: lightgreen;
-    width: 10px;
-    height: 10px;
-    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
     border-radius: 100px;
     border: 2px solid black;
     border-right: 2px solid red;
+    z-index: 50;
+    box-sizing: border-box;
   }
 }
 
 .level {
+  overflow: visible;
+  width: 0px;
+  height: 0px;
   .wall {
     background-color: #aaa;
     position: absolute;

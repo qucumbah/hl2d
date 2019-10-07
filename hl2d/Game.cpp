@@ -21,8 +21,8 @@ Game::~Game() {
 void Game::addUnconfirmedPlayer(int playerId) {
 	Player* player = new Player(playerId);
 	spawnEntity(player);
-	//cout << "added player " << playerId <<
-	//	"; entity number: " << _entities.size() << endl;
+	cout << "added player " << playerId <<
+		"; entity number: " << _entities.size() << endl;
 }
 
 void Game::confirmPlayer(int playerId, string name) {
@@ -40,8 +40,8 @@ void Game::confirmPlayer(int playerId, string name) {
 void Game::removePlayer(int playerId) {
 	Player* player = _getPlayerById(playerId);
 	player->destroy();
-	//cout << "removed player " << playerId <<
-	//	"; entity number: " << _entities.size() << endl;
+	cout << "removed player " << playerId <<
+		"; entity number: " << _entities.size() << endl;
 }
 
 bool Game::isNameTaken(string name) {
