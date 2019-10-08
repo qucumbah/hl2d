@@ -44,9 +44,7 @@ bool AreaHitter::_canHit(Player* player) {
 		return false;
 	}
 
-	double dx = cos(_angle);
-	double dy = sin(_angle);
-	Vec2 hitDirectionNormal = Vec2(dx, dy);
+	Vec2 hitDirectionNormal = getDirectionNormal();
 
 	if (relativePosition * hitDirectionNormal < 0) {
 		//Player is behind

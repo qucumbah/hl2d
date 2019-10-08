@@ -49,6 +49,7 @@ class Game extends React.Component {
       interval: null,
       actions: [],
       crosshairPosition: { x: 0, y: 0 },
+      prevEntities: null,
     };
 
     //Only need this to focus, autoFocus property doesn't work
@@ -141,12 +142,50 @@ class Game extends React.Component {
     });
   }
 
+  getNewParticles = (prevEntities, newEntities) => {
+    return newEntities.map(newEntity => {
+      switch (newEntity.type) {
+        case 'Player':
+          //Player can bleed if he gets hit (if his HP decreases)
+          const previous = prevEntities.find(prevEntity => {
+            return prevEntity.type === 'Player' && prevEntity.id === entity.id;
+          });
+
+          if (previous.health > newEntity.health) {
+            return {
+              name: 'blood',
+              duration: 2000
+            };
+          }
+
+          break;
+        case 'AreaHitter':
+          //Crowbar swing
+          return {
+            name: 'crowbarSwing',
+            duration: 500
+          };
+          break;
+        default:
+          return null;
+      }
+    });
+  }
+
   render() {
-    let entities;
+    let entities, particles;
     if (!this.props.entities) {
       entities = null;
+      particles = null;
     } else {
       entities = this.mapEntities(this.props.entities);
+      //We have use previous entities here to check for changes
+      particles = this.getNewParticles(
+        this.state.prevEntities,
+        this.props.entities
+      );
+
+      this.setState({ prevEntities: this.props.entities });
     }
 
     return (
@@ -159,6 +198,7 @@ class Game extends React.Component {
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
         ref={this.gameRef}
+        onContextMenu={event => event.preventDefault()} //Block rmb context menu
       >
         {entities}
         <Level source={this.props.map} />
