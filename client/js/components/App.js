@@ -1,5 +1,7 @@
 import Connect from './Connect.js';
 import Game from './Game.js';
+import particleSystem from '../particleSystem.js';
+import { stat } from 'fs';
 
 class App extends React.Component {
   constructor() {
@@ -147,7 +149,10 @@ class App extends React.Component {
       console.log(exception);
     }
 
-    this.setState({ entities });
+    particleSystem.update(entities);
+    const particles = particleSystem.getParticles();
+
+    this.setState({ entities, particles });
 
     //console.log(message);
   }
@@ -197,6 +202,7 @@ class App extends React.Component {
         <Game
           map={this.state.map}
           entities={this.state.entities}
+          particles={this.state.particles}
           playerId={this.state.playerId}
           onTick={this.sendTickInfo}
         />

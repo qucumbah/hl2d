@@ -39,6 +39,13 @@ void Game::confirmPlayer(int playerId, string name) {
 
 void Game::removePlayer(int playerId) {
 	Player* player = _getPlayerById(playerId);
+
+	if (player == nullptr) {
+		cout << "client " << playerId
+			<< " sent disconnect request more than once; skipping" << endl;
+		return;
+	}
+
 	player->destroy();
 	cout << "removed player " << playerId <<
 		"; entity number: " << _entities.size() << endl;
@@ -109,6 +116,7 @@ void Game::update(map<int, string>* playerActions) {
 	for (Entity* entity : _entities) {
 		if (entity->isDestroyed()) {
 			removeEntity(entity);
+			delete entity;
 			continue;
 		}
 
@@ -131,12 +139,8 @@ void Game::update(map<int, string>* playerActions) {
 
 Player* Game::_getPlayerById(int playerId) {
 	for (Entity* entity : _entitiesBuffer) {
-		if (entity->getType() == "Player") {
-			Player* player = (Player*)entity;
-
-			if (player->getId() == playerId) {
-				return player;
-			}
+		if (entity->getType() == "Player" && entity->getId() == playerId) {
+			return (Player*)entity;
 		}
 	}
 
