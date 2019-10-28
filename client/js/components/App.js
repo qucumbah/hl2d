@@ -1,7 +1,7 @@
 import Connect from './Connect.js';
 import Game from './Game.js';
 import particleSystem from '../particleSystem.js';
-import { stat } from 'fs';
+import util from '../util.js';
 
 class App extends React.Component {
   constructor() {
@@ -81,7 +81,7 @@ class App extends React.Component {
       const mapString = message.slice(message.indexOf('\n') + 1);
       let mapObj;
       try {
-        mapObj = JSON.parse(mapString);
+        mapObj = JSON.parse(mapString, util.jsonReviewer);
       } catch (exception) {
         this.handleDisconnect('mapError');
         return;
@@ -144,7 +144,7 @@ class App extends React.Component {
 
     let entities;
     try {
-      entities = JSON.parse(message);
+      entities = JSON.parse(message, util.jsonReviewer);
     } catch (exception) {
       console.log(exception);
     }
@@ -191,7 +191,6 @@ class App extends React.Component {
       content = (
         <Connect
           onConnectAttempt={this.handleConnectAttempt}
-          onError={this.displayError}
           lastAdress={this.state.lastAdress}
           lastName={this.state.lastName}
           isConnecting={this.state.connectionState === WebSocket.CONNECTING}

@@ -11,4 +11,13 @@ const Particle = function({source}) {
   );
 }
 
+Particle.propTypes = {
+  source: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+    name: PropTypes.string,
+    lifeTime: PropTypes.number,
+  }).isRequired,
+};
+
 export default Particle;

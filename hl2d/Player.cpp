@@ -139,7 +139,7 @@ void Player::update(Map* map,
 string Player::getJson() {
 	map<string, string> pairs;
 
-	pairs["renderable"] = _renderable?"1":""; //Yes
+	pairs["renderable"] = _renderable?"true":"false"; //Yes
 	pairs["connectionStatus"] = to_string(_connectionStatus);
 	pairs["type"] = _type;
 	pairs["name"] = _name;

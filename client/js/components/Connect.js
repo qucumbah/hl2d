@@ -26,4 +26,11 @@ const Connect = function(props) {
   );
 }
 
+Connect.propTypes = {
+  onConnectAttempt: PropTypes.func.isRequired,
+  lastAdress: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  isConnecting: PropTypes.bool.isRequired,
+};
+
 export default Connect;

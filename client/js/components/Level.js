@@ -11,4 +11,15 @@ const Level = function(props) {
   return <div className="level">{walls}</div>;
 }
 
+Level.propTypes = {
+  source: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      width: PropTypes.number,
+      height: PropTypes.number,
+    })
+  ).isRequired,
+};
+
 export default Level;

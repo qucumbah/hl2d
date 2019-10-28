@@ -9,4 +9,13 @@ const Wall = function(props) {
   return <div className="wall" style={style}></div>;
 }
 
+Wall.propTypes = {
+  source: PropTypes.shape({
+    x: PropTypes.number,
+    y: PropTypes.number,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }).isRequired,
+};
+
 export default Wall;

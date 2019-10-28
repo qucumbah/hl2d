@@ -182,4 +182,34 @@ class Game extends React.Component {
   }
 }
 
+Game.propTypes = {
+  map: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      width: PropTypes.number,
+      height: PropTypes.number,
+    })
+  ).isRequired,
+  entities: PropTypes.arrayOf(
+    PropTypes.shape({ renderable: PropTypes.bool })
+  ),
+  particles: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number,
+      name: PropTypes.string,
+      lifeTime: PropTypes.number,
+    })
+  ),
+  playerId: PropTypes.number,
+  onTick: PropTypes.func.isRequired,
+};
+
+Game.defaultProps = {
+  entities: null,
+  particles: null,
+  playerId: -1,
+};
+
 export default Game;

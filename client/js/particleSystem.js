@@ -36,10 +36,7 @@ class ParticleSystem {
             return null;
           }
 
-          const previousTickHealth = parseFloat(previous.health);
-          const currentTickHealth = parseFloat(newEntity.health);
-
-          if (previousTickHealth > currentTickHealth) {
+          if (previous.health > newEntity.health) {
             return {
               name: 'blood',
               lifeTime: 2000,
@@ -67,6 +64,10 @@ class ParticleSystem {
   }
 
   update = newEntities => {
+    if (!newEntities) {
+      return;
+    }
+
     const newParticles = (
       this.getNewParticles(this.prevEntities, newEntities)
       .filter(particle => particle !== null)
@@ -75,7 +76,7 @@ class ParticleSystem {
     newParticles.forEach(particle => {
       particle.id = this.nextId++;
       this.queueParticleDeath(particle);
-      
+
       this.addParticle(particle);
     });
 

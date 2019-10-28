@@ -17,4 +17,14 @@ const Player = function(props) {
   );
 };
 
+Player.propTypes = {
+  source: PropTypes.shape({
+    renderable: PropTypes.bool,
+    x: PropTypes.number,
+    y: PropTypes.number,
+    angle: PropTypes.number,
+    hp: PropTypes.number,
+  }).isRequired
+};
+
 export default Player;
