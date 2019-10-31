@@ -17,7 +17,6 @@ private:
 	WebsocketServer _wss;
 	Game _game;
 	map<int, string>* _queuedInputs;
-	Timer* _tickTimer;
 
 	void _handleFirstRequest(int clientId, string message);
 	void _handleRequest(int clientId, string message);

@@ -128,6 +128,7 @@
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Hitter.cpp" />
+    <ClCompile Include="EventQueue.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="WebsocketServer.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="EventEmitter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="EventQueue.h" />
     <ClInclude Include="Hitter.h" />
     <ClInclude Include="LineHitter.h" />
     <ClInclude Include="Vec2.h" />

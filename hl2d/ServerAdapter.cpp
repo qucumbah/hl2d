@@ -1,14 +1,18 @@
 #include "ServerAdapter.h"
+#include "EventQueue.h"
 
 using std::map;
 using std::stringstream;
 
 ServerAdapter::ServerAdapter() {
 	_queuedInputs = new map<int, string>();
+	/*
 	_tickTimer = new Timer(
 		[this]() { this->_tick(); },
 		TICKTIME
 	);
+	*/
+	EventQueue::every(TICKTIME, [this]() { this->_tick(); });
 
 	_wss.on("clientConnect", [this](int clientId, string message) {
 		this->_game.addUnconfirmedPlayer(clientId);

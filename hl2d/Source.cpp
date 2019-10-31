@@ -7,12 +7,15 @@
 #include "Vec2.h"
 
 #include "util.h"
+#include "EventQueue.h"
 #include "EventEmitter.h"
 
 using namespace std;
 
 int main() {
 	util::startWinsock();
+	EventQueue::initialize();
+
 	ServerAdapter s;
 
 	system("pause");
