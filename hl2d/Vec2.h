@@ -20,8 +20,6 @@ public:
 		//c = length of (n - w) vector
 		double c = getBasicIntersectionCoefficient(w, dPerpendicular, p, d);
 
-		cout << c << endl;
-
 		if (c < -r || c > r) {
 			return Vec2::getInvalidVector();
 		}

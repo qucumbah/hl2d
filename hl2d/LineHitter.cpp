@@ -28,10 +28,10 @@ void LineHitter::update(
 	string additionalInfo) {
 
 	auto hits = _getPlayerHits(level, entities);
-	for (auto pair : *hits) {
-		//First = player, second = damage (int)
-		pair.first->hit( (int)pair.second );
+	for (auto [player, damage] : *hits) {
+		player->hit( (int)damage );
 	}
+	delete hits;
 
 	//Destroy after dealing damage
 	destroy();
@@ -64,8 +64,6 @@ map<Player*, int>* LineHitter::_getPlayerHits(Level* level, list<Entity*>* entit
 			continue;
 		}
 
-		cout << "checking" << endl;
-
 		Vec2 hit = Vec2::getIntersectionWithCircle(
 			getPosition(), d, player->getPosition(), player->getRadius()
 		);
@@ -75,15 +73,11 @@ map<Player*, int>* LineHitter::_getPlayerHits(Level* level, list<Entity*>* entit
 			continue;
 		}
 
-		cout << "valid hit" << endl;
-
 		double hitDistance = (hit - getPosition()).length();
 		if (hitDistance > maxDistance) {
 			//Player is behind a wall (if negatesCover == false) or is too far
 			continue;
 		}
-
-		cout << "valid distance" << endl;
 
 		double fallof = hitDistance / maxDistance;
 		double damage = util::lerp(_startDamage, _endDamage, fallof);
