@@ -40,7 +40,7 @@ body {
   overflow: visible;
   width: 0px;
   height: 0px;
-  
+
   .wall {
     background-color: #aaa;
     position: absolute;
@@ -52,11 +52,23 @@ body {
   width: 0;
   height: 0;
   overflow: visible;
+  
+  animation-name: fadeOut;
+  animation-fill-mode: forwards;
 
   img {
     position: absolute;
     left: 0;
     top: 0;
     transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

@@ -22,7 +22,8 @@ protected:
 	double _startDamage, _endDamage;
 	bool _negatesCover;
 
-	map<Player*, int>* _getPlayerHits(Level* level, list<Entity*>* entities);
+	map<Player*, int>* _getPlayerHits(
+		Level* level, list<Entity*>* entities, double maxDistance);
 	double _getClosestDistanceToWall(
 		Level* level, Vec2 direction, double maxDistance);
 };

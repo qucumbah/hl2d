@@ -5,6 +5,8 @@
 
 #include <string>
 
+using std::string;
+
 class AreaHitter : public Hitter {
 public:
 	AreaHitter(int damage, double range);

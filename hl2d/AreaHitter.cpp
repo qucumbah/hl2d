@@ -12,7 +12,7 @@ void AreaHitter::activate(Player* player) {
 	_x = player->getX();
 	_y = player->getY();
 	_angle = player->getAngle();
-	_renderable = true;
+	_renderable = false;
 	_creatorId = player->getId();
 }
 
@@ -30,6 +30,9 @@ void AreaHitter::update(
 			}
 		}
 	}
+
+	//Allow rendering for the last tick
+	_renderable = true;
 
 	//Destroy after dealing damage
 	destroy();

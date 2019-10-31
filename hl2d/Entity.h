@@ -5,7 +5,9 @@
 #include <list>
 
 #include "Level.h"
+#include "util.h"
 
+using std::to_string;
 using std::string;
 using std::list;
 
@@ -17,7 +19,17 @@ public:
 		string additionalInfo) = 0;
 
 	virtual string getJson() {
-		return "{\"renderable\": \"false\"}";
+		map<string, string> pairs;
+
+		pairs["renderable"] = _renderable ? "true" : "false";
+		pairs["type"] = _type;
+		pairs["angle"] = to_string(_angle);
+		pairs["radius"] = to_string(_radius);
+		pairs["x"] = to_string(_x);
+		pairs["y"] = to_string(_y);
+
+		string json = util::createJson(pairs);
+		return json;
 	};
 
 	string getType() {

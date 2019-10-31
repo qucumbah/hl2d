@@ -11,38 +11,22 @@ LineHitter::LineHitter(
 }
 
 void LineHitter::activate(Player* player) {
-	_type = "AreaHitter";
+	_type = "LineHitter";
 	_id = _nextId++;
 
 	_x = player->getX();
 	_y = player->getY();
 	_angle = player->getAngle();
 	_radius = 200;
-	_renderable = true;
+	_renderable = false;
 	_creatorId = player->getId();
 }
 
 void LineHitter::update(
 	Level* level,
 	list<Entity*>* entities,
-	string additionalInfo) {
-
-	auto hits = _getPlayerHits(level, entities);
-	for (auto [player, damage] : *hits) {
-		player->hit( (int)damage );
-	}
-	delete hits;
-
-	//Destroy after dealing damage
-	destroy();
-}
-
-map<Player*, int>* LineHitter::_getPlayerHits(Level* level, list<Entity*>* entities) {
-	//LineHitter hits the every player on a line with length RANGE that is
-	//aimed at where creator is looking; after first update it gets destroyed
-
-	auto hits = new map<Player*, int>();
-
+	string additionalInfo
+) {
 	//Max hit distance (=hitscan line length)
 	double maxDistance = _radius;
 	//Normalized direction vector
@@ -51,6 +35,32 @@ map<Player*, int>* LineHitter::_getPlayerHits(Level* level, list<Entity*>* entit
 	if (!_negatesCover) {
 		maxDistance = _getClosestDistanceToWall(level, d, _radius);
 	}
+
+	//Get all hits on hit line
+	auto hits = _getPlayerHits(level, entities, maxDistance);
+	for (auto [player, damage] : *hits) {
+		player->hit( damage );
+	}
+	delete hits;
+
+	//Change radius to hit line length for presentation (we wont need it for
+	//anything else)
+	_radius = maxDistance;
+	_renderable = true;
+
+	//Destroy after dealing damage
+	destroy();
+}
+
+//LineHitter hits the every player on a line with length RANGE that is
+//aimed at where creator is looking; after first update it gets destroyed
+map<Player*, int>* LineHitter::_getPlayerHits(
+	Level* level, list<Entity*>* entities, double maxDistance
+) {
+	auto hits = new map<Player*, int>();
+
+	//Normalized direction vector
+	Vec2 d = Vec2::getNormalFromAngle(_angle);
 
 	for (auto entity : *entities) {
 		if (entity->getType() != "Player") {
@@ -82,7 +92,7 @@ map<Player*, int>* LineHitter::_getPlayerHits(Level* level, list<Entity*>* entit
 		double fallof = hitDistance / maxDistance;
 		double damage = util::lerp(_startDamage, _endDamage, fallof);
 
-		(*hits)[player] = damage;
+		(*hits)[player] = (int)damage;
 	}
 
 	return hits;

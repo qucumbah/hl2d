@@ -236,8 +236,8 @@ void Player::_handleAction(int actionCode) {
 
 void Player::_updateRotation() {
 	//Crosshair position relative to player
-	double x = _crosshairX - _x;
-	double y = _crosshairY - _y;
+	int x = _crosshairX - _x;
+	int y = _crosshairY - _y;
 
 	//Distance from player to crosshair
 	double r = sqrt(x*x + y*y);

@@ -50,9 +50,19 @@ class ParticleSystem {
           //Crowbar swing
           return {
             name: 'crowbarSwing',
+            lifeTime: 300,
+            x: newEntity.x,
+            y: newEntity.y,
+            angle: newEntity.angle,
+          };
+          break;
+        case 'LineHitter':
+          return {
+            name: 'bulletTrajectory',
             lifeTime: 500,
             x: newEntity.x,
             y: newEntity.y,
+            angle: newEntity.angle,
           };
           break;
         default:
