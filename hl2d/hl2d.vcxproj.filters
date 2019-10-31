@@ -57,9 +57,6 @@
     <ClCompile Include="Socket.cpp">
       <Filter>Source Files\WebsocketServer</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -84,6 +81,12 @@
     <ClCompile Include="Hitter.cpp">
       <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="LineHitter.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Socket.h">
@@ -96,9 +99,6 @@
       <Filter>Header Files\WebsocketServer</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="EventEmitter.h">
@@ -133,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="AreaHitter.h">
       <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="LineHitter.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

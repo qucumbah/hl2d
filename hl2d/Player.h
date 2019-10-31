@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Entity.h"
-#include "Map.h"
 #include "Gun.h"
 #include "Hitter.h"
 #include "Vec2.h"
@@ -19,7 +18,6 @@ public:
 
 	static const int MAX_HEALTH = 100;
 	static const int MOVEMENT_SPEED = 1;
-	static const int PLAYER_RADIUS = 8;
 
 	Player(int id);
 	~Player();
@@ -28,7 +26,7 @@ public:
 	void connectWithName(string name);
 
 	virtual void update(
-		Map* map,
+		Level* level,
 		list<Entity*>* entities,
 		string playerInputsString) override;
 
@@ -63,10 +61,7 @@ private:
 	void _updateRotation();
 
 	Vec2 _getMovement();
-	Vec2 _getLargestBounce(Vec2 movement, Map* map);
-	Vec2 _getBounce(Vec2 playerPosition, Map::Edge edge);
+	Vec2 _getLargestBounce(Vec2 movement, Level* level);
+	Vec2 _getBounce(Vec2 playerPosition, Level::Edge edge);
 	void _move(Vec2 movement);
-
-	//stability test
-	int _lastNumber = 0;
 };

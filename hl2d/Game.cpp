@@ -11,7 +11,7 @@ using std::cout;
 using std::endl;
 
 Game::Game() {
-	_map = new Map("a");
+	_level = new Level("a");
 }
 
 Game::~Game() {
@@ -75,8 +75,8 @@ void Game::respawnPlayer(Player* player) {
 	player->respawn(0, 0);
 }
 
-string Game::getMapJson() {
-	return _map->getJson();
+string Game::getLevelJson() {
+	return _level->getJson();
 }
 
 string Game::getJson() {
@@ -124,13 +124,13 @@ void Game::update(map<int, string>* playerActions) {
 			string thisPlayerActions = (*playerActions)[entity->getId()];
 
 			Player* player = (Player*)entity;
-			player->update(_map, &_entitiesBuffer, thisPlayerActions);
+			player->update(_level, &_entitiesBuffer, thisPlayerActions);
 			if (!player->isAlive()) {
 				respawnPlayer(player);
 			}
 		}
 		else {
-			entity->update(_map, &_entitiesBuffer, "");
+			entity->update(_level, &_entitiesBuffer, "");
 		}
 	}
 

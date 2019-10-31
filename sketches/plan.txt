@@ -1,0 +1,8 @@
+1. LineHitter class
+2. SMG
+3. Shotgun
+4. Gauss
+5. Projectile class
+6. Crossbow
+7. Rocket class
+8. Rocket launcher

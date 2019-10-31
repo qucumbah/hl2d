@@ -1,5 +1,10 @@
 #include "AreaHitter.h"
 
+AreaHitter::AreaHitter(int damage, double range) {
+	_damage = damage;
+	_radius = range;
+}
+
 void AreaHitter::activate(Player* player) {
 	_type = "AreaHitter";
 	_id = _nextId++;
@@ -12,7 +17,7 @@ void AreaHitter::activate(Player* player) {
 }
 
 void AreaHitter::update(
-	Map* map,
+	Level* level,
 	list<Entity*>* entities,
 	string additionalInfo) {
 
@@ -21,7 +26,7 @@ void AreaHitter::update(
 		if (entity->getType() == "Player") {
 			Player* player = (Player*)entity;
 			if (_canHit(player)) {
-				player->hit(DAMAGE);
+				player->hit(_damage);
 			}
 		}
 	}
@@ -39,7 +44,7 @@ bool AreaHitter::_canHit(Player* player) {
 
 	Vec2 relativePosition = player->getPosition() - this->getPosition();
 
-	if (relativePosition.length() > RANGE) {
+	if (relativePosition.length() > _radius) {
 		//Player is too far
 		return false;
 	}

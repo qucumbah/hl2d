@@ -5,11 +5,11 @@ Rifle::Rifle(int ownerId) : Gun(ownerId) {
 }
 
 void Rifle::pullTrigger1() {
-	cout << "pew" << endl;
+	_emit("shoot", new LineHitter(250, 25, 20, false));
 }
 
 void Rifle::releaseTrigger1() {
-	cout << "whoosh" << endl;
+
 }
 
 void Rifle::pullTrigger2() {

@@ -119,7 +119,8 @@
     <ClCompile Include="AreaHitter.cpp" />
     <ClCompile Include="Crowbar.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="LineHitter.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rifle.cpp" />
     <ClCompile Include="ServerAdapter.cpp" />
@@ -138,8 +139,9 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Hitter.h" />
+    <ClInclude Include="LineHitter.h" />
     <ClInclude Include="Vec2.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rifle.h" />
     <ClInclude Include="ServerAdapter.h" />

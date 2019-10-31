@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Gun.h"
+#include "LineHitter.h"
 
 class Rifle : public Gun {
 public:

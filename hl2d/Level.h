@@ -8,7 +8,7 @@
 using std::string;
 using std::list;
 
-class Map {
+class Level {
 public:
 	class Location {
 	public:
@@ -33,13 +33,13 @@ public:
 		}
 	};
 
-	Map(string mapName);
-	~Map();
+	Level(string name);
+	~Level();
 
 	string getJson();
 
-	list<Map::Edge> getEdges();
-	list<Map::Location> getSpawnLocations();
+	list<Level::Edge> getEdges();
+	list<Level::Location> getSpawnLocations();
 private:
 	string _json;
 

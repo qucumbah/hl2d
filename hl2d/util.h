@@ -17,4 +17,9 @@ namespace util {
 
 	string createJson(map<string, string> pairs);
 	string createJsonArray(list<string> elements);
+
+	template<class T>
+	T lerp(T a, T b, double t) {
+		return a + (b - a) * t;
+	}
 }

@@ -38,6 +38,7 @@ Player::Player(int id) {
 	_x = 100;
 	_y = 100;
 	_angle = 0;
+	_radius = 8;
 	_renderable = false;
 
 	_up = false;
@@ -73,7 +74,7 @@ void Player::connectWithName(string name) {
 	_name = name;
 }
 
-void Player::update(Map* map,
+void Player::update(Level* level,
 	list<Entity*>* entities,
 	string playerInputsString) {
 	if (!isAlive()) {
@@ -96,21 +97,6 @@ void Player::update(Map* map,
 
 			_updateCrosshairPosition(x, y);
 		}
-		/*
-		else if (token == "stabilityTest") {
-			//stability test
-			int number;
-			tokenStream >> number;
-			if (number != _lastNumber) {
-				cout << "collision: " << number << ", " << _lastNumber << endl;
-				_lastNumber = number;
-			}
-			else {
-				cout << "ok: " << number << ", " << _lastNumber << endl;
-			}
-			_lastNumber++;
-		}
-		*/
 		else {
 			int actionCode = atoi( token.data() );
 			//atoi returns 0 if there was an error; We dont have action with
@@ -131,7 +117,7 @@ void Player::update(Map* map,
 	_updateRotation();
 
 	Vec2 movement = _getMovement();
-	Vec2 bounce = _getLargestBounce(movement, map);
+	Vec2 bounce = _getLargestBounce(movement, level);
 
 	_move(movement + bounce);
 }
@@ -139,7 +125,7 @@ void Player::update(Map* map,
 string Player::getJson() {
 	map<string, string> pairs;
 
-	pairs["renderable"] = _renderable?"true":"false"; //Yes
+	pairs["renderable"] = _renderable?"true":"false";
 	pairs["connectionStatus"] = to_string(_connectionStatus);
 	pairs["type"] = _type;
 	pairs["name"] = _name;
@@ -277,7 +263,7 @@ Vec2 Player::_getMovement() {
 	return movement;
 }
 
-Vec2 Player::_getLargestBounce(Vec2 movement, Map* map) {
+Vec2 Player::_getLargestBounce(Vec2 movement, Level* level) {
 	//Here we need to find the largest bounce
 	//We need it because after the player has moved he can be inside an edge
 	//and we need to push him out by 'bouncing' him back
@@ -287,7 +273,7 @@ Vec2 Player::_getLargestBounce(Vec2 movement, Map* map) {
 	Vec2* largestBounce = new Vec2(0, 0); //For comparisons
 	Vec2 playerPosition = Vec2(_x, _y) + movement;
 
-	list<Map::Edge> edges = map->getEdges();
+	list<Level::Edge> edges = level->getEdges();
 
 	for (auto edge : edges) {
 		Vec2 bounce = _getBounce(playerPosition, edge);
@@ -303,24 +289,19 @@ Vec2 Player::_getLargestBounce(Vec2 movement, Map* map) {
 	return *largestBounce;
 }
 
-Vec2 Player::_getBounce(Vec2 playerPosition, Map::Edge edge) {
+Vec2 Player::_getBounce(Vec2 playerPosition, Level::Edge edge) {
 	//Algorithm of finding a bounce is described in sketch 1
-	Vec2 n = edge.perpendicularNormal * PLAYER_RADIUS;
+	Vec2 n = edge.perpendicularNormal * _radius;
 
-	if (Vec2::isFacing(playerPosition, n, edge.start, edge.body)) {
-		double k = Vec2::getIntersectionCoefficient(
-			playerPosition, n, edge.start, edge.body
-		);
+	double k = Vec2::getIntersectionCoefficient(
+		playerPosition, n, edge.start, edge.body
+	);
 
-		//cout << "is facing; ";
-
-		if (k >= 1 || k <= 0) {
+	if (!isnan(k)) {
+		if (k <= 0 || k >= 1) {
 			//Not inside or too much inside
-			//cout << "Not inside or too much inside" << endl;
 			return Vec2(0, 0);
 		}
-
-		//cout << "Touching edge; result: " << n * (k - 1) << endl;
 
 		return n * (k - 1);
 	}
@@ -334,13 +315,13 @@ Vec2 Player::_getBounce(Vec2 playerPosition, Map::Edge edge) {
 
 		//cout << "isn't facing; ";
 
-		if (d.length() > PLAYER_RADIUS) {
+		if (d.length() > _radius) {
 			//Not touching any end point of the edge
 			//cout << "Not touching any end point of the edge" << endl;
 			return Vec2(0, 0);
 		}
 
-		Vec2 r = d.normal() * PLAYER_RADIUS;
+		Vec2 r = d.normal() * _radius;
 
 		//cout << "Touching end of the edge; result: " << d - r << endl;
 

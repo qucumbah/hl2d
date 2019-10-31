@@ -1,4 +1,4 @@
-#include "Map.h"
+#include "Level.h"
 #include "util.h"
 
 #include <string>
@@ -12,9 +12,9 @@ using std::cout;
 using std::endl;
 using std::to_string;
 
-Map::Map(string mapName) {
+Level::Level(string name) {
 	ifstream mapFile;
-	string path = "maps/" + mapName + ".txt";
+	string path = "maps/" + name + ".txt";
 	mapFile.open(path);
 
 	if (!mapFile.is_open()) {
@@ -71,34 +71,34 @@ Map::Map(string mapName) {
 	mapFile.close();
 
 	//Can support diagonal walls; might use later
-	//_edges.push_back(Map::Edge(Vec2(100, 100), Vec2(50, 50)));
+	//_edges.push_back(Level::Edge(Vec2(100, 100), Vec2(50, 50)));
 }
 
-Map::~Map() {
+Level::~Level() {
 
 }
 
-string Map::getJson() {
+string Level::getJson() {
 	return _json;
 }
 
-list<Map::Edge> Map::getEdges() {
+list<Level::Edge> Level::getEdges() {
 	return _edges;
 }
 
-list<Map::Location> Map::getSpawnLocations() {
+list<Level::Location> Level::getSpawnLocations() {
 	return _spawnLocations;
 }
 
-void Map::_addEdge(double x1, double y1, double x2, double y2) {
+void Level::_addEdge(double x1, double y1, double x2, double y2) {
 	Vec2 start(x1, y1);
 	Vec2 body(x2 - x1, y2 - y1);
 
 	cout << start << body << endl;
 
-	_edges.push_back( Map::Edge(start, body) );
+	_edges.push_back(Level::Edge(start, body) );
 }
 
-void Map::_addSpawnLocation(double x, double y) {
-	_spawnLocations.push_back( Map::Location(x, y, 0) );
+void Level::_addSpawnLocation(double x, double y) {
+	_spawnLocations.push_back(Level::Location(x, y, 0) );
 }

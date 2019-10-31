@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-#include "Map.h"
+#include "Level.h"
 #include "Player.h"
 #include <list>
 #include <string>
@@ -27,7 +27,7 @@ public:
 
 	void respawnPlayer(Player* player);
 
-	string getMapJson();
+	string getLevelJson();
 	string getJson();
 
 	void update(map<int, string>* playerActions);
@@ -38,7 +38,7 @@ private:
 	//_entitiesBuffer
 	list<Entity*> _entities;
 	list<Entity*> _entitiesBuffer;
-	Map* _map;
+	Level* _level;
 
 	Player* _getPlayerById(int playerId);
 };

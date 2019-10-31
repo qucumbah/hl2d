@@ -5,7 +5,7 @@ Crowbar::Crowbar(int ownerId) : Gun(ownerId) {
 }
 
 void Crowbar::pullTrigger1() {
-	_emit("shoot", new AreaHitter());
+	_emit("shoot", new AreaHitter(25, 50));
 }
 
 void Crowbar::releaseTrigger1() {

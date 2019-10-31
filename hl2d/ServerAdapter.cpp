@@ -23,7 +23,6 @@ ServerAdapter::ServerAdapter() {
 			this->_handleFirstRequest(clientId, message);
 		}
 		else if (message.find("inputs") != -1) {
-			//
 			this->_handleRequest(clientId, message);
 		}
 	});
@@ -46,8 +45,8 @@ void ServerAdapter::_handleFirstRequest(int clientId, string message) {
 
 	this->_game.confirmPlayer(clientId, name);
 
-	string mapJson = this->_game.getMapJson();
-	string response = "id " + std::to_string(clientId) + "\n" + mapJson;
+	string levelJson = this->_game.getLevelJson();
+	string response = "id " + std::to_string(clientId) + "\n" + levelJson;
 	this->_wss.sendMessage(response, clientId);
 }
 
@@ -75,7 +74,7 @@ void ServerAdapter::_tick() {
 	//While the game was updating clients would still send messages, but these
 	//messages would get skipped because queued inputs would be cleaned after
 	//update.
-	//After this simple fix there is much less lost packages
+	//After this simple fix there are much less lost packages
 	auto inputs = _queuedInputs;
 	_queuedInputs = new map<int, string>();
 	this->_game.update(inputs);

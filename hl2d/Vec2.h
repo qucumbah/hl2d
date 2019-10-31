@@ -11,7 +11,41 @@ class Vec2 {
 public:
 	const double x, y;
 
+	static Vec2 getIntersectionWithCircle(Vec2 p, Vec2 m, Vec2 w, double r) {
+		//See sketch 4
+		
+		Vec2 d = m.normal();
+		Vec2 dPerpendicular = d.perpendicularClockwise();
+
+		//c = length of (n - w) vector
+		double c = getBasicIntersectionCoefficient(w, dPerpendicular, p, d);
+
+		cout << c << endl;
+
+		if (c < -r || c > r) {
+			return Vec2::getInvalidVector();
+		}
+
+		Vec2 n = w + dPerpendicular * c;
+		double k = -sqrt(r*r - c*c);
+		Vec2 result = n + k * d;
+		
+		return result;
+	}
+
 	static double getIntersectionCoefficient(Vec2 p, Vec2 m, Vec2 w, Vec2 b) {
+		if (!isFacing(p, m, w, b)) {
+			return NAN;
+		}
+
+		double coefficient = getBasicIntersectionCoefficient(p, m, w, b);
+
+		return coefficient;
+	}
+
+	static double getBasicIntersectionCoefficient(
+			Vec2 p, Vec2 m, Vec2 w, Vec2 b
+	) {
 		double upper = (w - p) ^ b;
 		double lower = (m ^ b);
 
@@ -34,6 +68,14 @@ public:
 
 		return rightSide && leftSide;
 	}
+	
+	static Vec2 getNormalFromAngle(double angle) {
+		return Vec2( cos(angle), sin(angle) );
+	}
+
+	static Vec2 getInvalidVector() {
+		return Vec2(NAN, NAN);
+	}
 
 	Vec2(double _x, double _y) : x(_x), y(_y) {
 
@@ -41,6 +83,10 @@ public:
 
 	double length() {
 		return sqrt(x*x + y*y);
+	}
+
+	bool isValid() {
+		return !isnan(x) && !isnan(y);
 	}
 
 	Vec2 normal() {

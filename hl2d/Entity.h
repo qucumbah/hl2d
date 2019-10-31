@@ -4,7 +4,7 @@
 #include <sstream>
 #include <list>
 
-#include "Map.h"
+#include "Level.h"
 
 using std::string;
 using std::list;
@@ -12,7 +12,7 @@ using std::list;
 class Entity {
 public:
 	virtual void update(
-		Map* map,
+		Level* level,
 		list<Entity*>* otherEntities,
 		string additionalInfo) = 0;
 
@@ -48,6 +48,9 @@ public:
 	double getAngle() {
 		return _angle;
 	}
+	double getRadius() {
+		return _radius;
+	}
 
 	Vec2 getPosition() {
 		return Vec2(_x, _y);
@@ -55,7 +58,7 @@ public:
 protected:
 	string _type;
 	int _id;
-	double _x, _y, _angle;
+	double _x, _y, _angle, _radius;
 	bool _renderable;
 	bool _destroyed = false;
 };

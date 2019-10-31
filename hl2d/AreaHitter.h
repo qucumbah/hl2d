@@ -7,12 +7,12 @@
 
 class AreaHitter : public Hitter {
 public:
-	static const int DAMAGE = 25;
-	static const int RANGE = 50;
+	AreaHitter(int damage, double range);
+
 	virtual void activate(Player* player) override;
 
 	virtual void update(
-		Map* map,
+		Level* level,
 		list<Entity*>* entities,
 		string additionalInfo) override;
 protected:
