@@ -281,12 +281,15 @@ Vec2 Player::_getLargestBounce(Vec2 movement, Level* level) {
 		//cout << bounce << *largestBounce << (bounce > *largestBounce) << endl;
 
 		if (bounce > *largestBounce) {
+			delete largestBounce;
 			largestBounce = new Vec2(bounce.x, bounce.y);
 			//cout << "replaced; new largest bounce: " << *largestBounce << endl;
 		}
 	}
 
-	return *largestBounce;
+	Vec2 result = *largestBounce;
+	delete largestBounce;
+	return result;
 }
 
 Vec2 Player::_getBounce(Vec2 playerPosition, Level::Edge edge) {

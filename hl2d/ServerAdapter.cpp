@@ -82,4 +82,5 @@ void ServerAdapter::_tick() {
 	auto inputs = _queuedInputs;
 	_queuedInputs = new map<int, string>();
 	this->_game.update(inputs);
+	delete inputs;
 }

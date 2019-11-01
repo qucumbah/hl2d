@@ -127,6 +127,7 @@ void Socket::_acceptClient() {
 	_getMessage(clientSocket, &message, &length);
 
 	_emit("accept", clientSocket, message, length);
+	delete[] message;
 }
 
 void Socket::_handleClient() {
@@ -136,6 +137,7 @@ void Socket::_handleClient() {
 	_getMessage(_socket, &message, &length);
 
 	_emit("message", _socket, message, length);
+	delete[] message;
 }
 
 void Socket::_getMessage(int socket, char** buffer, int* length) {

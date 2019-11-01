@@ -75,15 +75,16 @@ void WebsocketServer::sendMessage(string messageString, int clientId, int opcode
 			*/
 		}
 	}
+	delete[] message;
 }
 
 void WebsocketServer::_sendCloseMessage(int clientId) {
-	char* closeCode1000 = new char[3] {3, -24, 0};
+	char closeCode1000[] {3, -24, 0};
 	sendMessage(closeCode1000, clientId, 0x8);
 }
 
 void WebsocketServer::_sendCloseMessageAll() {
-	char* closeCode1000 = new char[3] {3, -24, 0};
+	char closeCode1000[] {3, -24, 0};
 	sendMessageAll(closeCode1000, 0x8);
 }
 
@@ -180,7 +181,7 @@ string WebsocketServer::_generateWsHandshakeResponse(char* request) {
 	}
 
 	//Get 24-character key that starts at index 19 of key header
-	char* wsKey = new char[61]{ 0 };
+	char wsKey [61] {0};
 	for (int i = 0; i < 24; i++) {
 		wsKey[i] = wsKeyHeader[19 + i];
 	}
@@ -334,5 +335,6 @@ void WebsocketServer::_acceptMessage(int clientSocket, char* request, int length
 	sendMessage("123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890", clientSocket);
 	*/
 
-	_emit("clientMessage", clientSocket, body);
+	_emit("clientMessage", clientSocket, string(body));
+	delete[] body;
 }

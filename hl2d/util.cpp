@@ -101,6 +101,7 @@ string util::SHA1(string input) {
 	for (int i = 0; i < 64; i++) {
 		bits[i + newLength - 64] = finalBits[i];
 	}
+	delete[] finalBits;
 
 	for (int start = 0; start < newLength; start += 512) {
 		uint32_t w[80]; //Blocks
@@ -160,6 +161,8 @@ string util::SHA1(string input) {
 		h4 += e;
 	}
 
+	delete[] bits;
+
 	char* resultBits = new char[160];
 
 	char* h0bits = int32ToBits(h0);
@@ -184,6 +187,12 @@ string util::SHA1(string input) {
 		resultBits[i + 128] = h4bits[i];
 	}
 
+	delete[] h0bits;
+	delete[] h1bits;
+	delete[] h2bits;
+	delete[] h3bits;
+	delete[] h4bits;
+
 	/*
 	for (int i = 0; i < 160; i++) {
 		cout << (int)resultBits[i];
@@ -195,7 +204,10 @@ string util::SHA1(string input) {
 	*/
 
 	char* result = bitsToString(resultBits, 160);
-	return result;
+	string resultString(result);
+	delete[] resultBits;
+	delete[] result;
+	return resultString;
 	/*
 	//Same as
 	char* result = new char[21] {0};
