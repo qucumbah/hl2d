@@ -38,6 +38,7 @@ class ParticleSystem {
 
           if (previous.health > newEntity.health) {
             return {
+              type: 'sprite',
               name: 'blood',
               lifeTime: 2000,
               x: newEntity.x,
@@ -48,7 +49,12 @@ class ParticleSystem {
           break;
         case 'AreaHitter':
           //Crowbar swing
+          if (!newEntity.renderable) {
+            return null;
+          }
+          
           return {
+            type: 'sprite',
             name: 'crowbarSwing',
             lifeTime: 300,
             x: newEntity.x,
@@ -57,11 +63,18 @@ class ParticleSystem {
           };
           break;
         case 'LineHitter':
+          if (!newEntity.renderable) {
+            return null;
+          }
+
           return {
+            type: 'line',
             name: 'bulletTrajectory',
             lifeTime: 500,
             x: newEntity.x,
             y: newEntity.y,
+            width: newEntity.radius,
+            height: 5,
             angle: newEntity.angle,
           };
           break;

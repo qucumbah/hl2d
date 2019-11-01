@@ -1,29 +1,42 @@
 const Particle = function({source}) {
   const imagePath = './img/' + source.name + '.png';
 
-  const style = {
-    left: source.x + 'px',
-    top: source.y + 'px',
-    animationDuration: source.lifeTime + 'ms',
-  };
-
-  if (source.angle) {
-    style.transform = 'rotate(' + source.angle + 'rad)';
+  let style;
+  if (source.type === 'sprite') {
+    style = {
+      left: source.x + 'px',
+      top: source.y + 'px',
+      animationDuration: source.lifeTime + 'ms',
+      transform: source.angle ? 'rotate(' + source.angle + 'rad)' : 'none',
+    };
+  } else if (source.type === 'line') {
+    style = {
+      left: source.x + 'px',
+      top: source.y + 'px',
+      animationDuration: source.lifeTime + 'ms',
+      transform: source.angle ? 'rotate(' + source.angle + 'rad)' : 'none',
+      transformOrigin: 'center left',
+      width: source.width + 'px',
+      height: source.height + 'px',
+    };
+  } else {
+    style = { display: 'none' };
   }
 
   return (
     <div className="particle" style={style}>
-      <img src={imagePath} alt="" />
+      <img className={source.type} src={imagePath} alt="" />
     </div>
   );
 }
 
 Particle.propTypes = {
   source: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-    name: PropTypes.string,
-    lifeTime: PropTypes.number,
+    type: PropTypes.string.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    lifeTime: PropTypes.number.isRequired,
   }).isRequired,
 };
 
