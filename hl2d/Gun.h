@@ -2,6 +2,7 @@
 
 #include "EventEmitter.h"
 #include "Hitter.h"
+#include "EventQueue.h"
 
 #include <string>
 
@@ -23,4 +24,15 @@ public:
 	}
 protected:
 	int _ownerId;
+	bool _isOnCooldown = false;
+
+	virtual void _shoot(Hitter* hitter, int cooldown) {
+		if (_isOnCooldown) {
+			return;
+		}
+
+		_emit("shoot", hitter);
+		_isOnCooldown = true;
+		EventQueue::after(cooldown, [this]() { this->_isOnCooldown = false; });
+	}
 };

@@ -17,7 +17,7 @@ void LineHitter::activate(Player* player) {
 	_x = player->getX();
 	_y = player->getY();
 	_angle = player->getAngle();
-	_radius = 200;
+	_radius = 800;
 	_renderable = false;
 	_creatorId = player->getId();
 }
