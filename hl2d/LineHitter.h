@@ -10,7 +10,13 @@ using std::map;
 
 class LineHitter : public Hitter {
 public:
-	LineHitter(double range, int startDamage, int endDamage, bool negatesCover);
+	LineHitter(
+		double range,
+		int startDamage,
+		int endDamage,
+		bool negatesCover,
+		double addedAngle
+	);
 
 	virtual void activate(Player* player) override;
 
@@ -21,6 +27,7 @@ public:
 protected:
 	double _startDamage, _endDamage;
 	bool _negatesCover;
+	double _addedAngle;
 
 	map<Player*, int>* _getPlayerHits(
 		Level* level, list<Entity*>* entities, double maxDistance);

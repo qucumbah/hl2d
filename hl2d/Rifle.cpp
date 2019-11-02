@@ -21,7 +21,8 @@ void Rifle::releaseTrigger2() {
 }
 
 LineHitter* Rifle::_createBullet() {
-	return new LineHitter(250, 25, 20, false);
+	int randomAddedAngle = rand() % INACCURACY - INACCURACY / 2;
+	return new LineHitter(250, 25, 20, false, randomAddedAngle);
 }
 
 void Rifle::_startShooting() {

@@ -6,6 +6,7 @@
 class Rifle : public Gun {
 public:
 	static const int COOLDOWN = 100;
+	static const int INACCURACY = 5;
 
 	Rifle(int ownerId);
 

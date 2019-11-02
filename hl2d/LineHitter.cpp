@@ -2,12 +2,17 @@
 #include "util.h"
 
 LineHitter::LineHitter(
-	double range, int startDamage, int endDamage, bool negatesCover
+	double range,
+	int startDamage,
+	int endDamage,
+	bool negatesCover,
+	double addedAngle
 ) {
 	_startDamage = startDamage;
 	_endDamage = endDamage;
 	_radius = range;
 	_negatesCover = negatesCover;
+	_addedAngle = addedAngle;
 }
 
 void LineHitter::activate(Player* player) {
@@ -16,7 +21,7 @@ void LineHitter::activate(Player* player) {
 
 	_x = player->getX();
 	_y = player->getY();
-	_angle = player->getAngle();
+	_angle = player->getAngle() + (_addedAngle / 180.0) * 3.14;
 	_radius = 800;
 	_renderable = false;
 	_creatorId = player->getId();

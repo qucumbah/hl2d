@@ -120,11 +120,13 @@
     <ClCompile Include="AreaHitter.cpp" />
     <ClCompile Include="Crowbar.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gauss.cpp" />
     <ClCompile Include="LineHitter.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rifle.cpp" />
     <ClCompile Include="ServerAdapter.cpp" />
+    <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Hitter.cpp" />
@@ -139,8 +141,10 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EventEmitter.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Gauss.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="EventQueue.h" />
+    <ClInclude Include="Shotgun.h" />
     <ClInclude Include="Hitter.h" />
     <ClInclude Include="LineHitter.h" />
     <ClInclude Include="Vec2.h" />

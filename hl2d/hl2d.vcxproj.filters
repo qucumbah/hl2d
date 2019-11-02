@@ -90,6 +90,12 @@
     <ClCompile Include="EventQueue.cpp">
       <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Shotgun.cpp">
+      <Filter>Source Files\Game\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="Gauss.cpp">
+      <Filter>Source Files\Game\Guns</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Socket.h">
@@ -145,6 +151,12 @@
     </ClInclude>
     <ClInclude Include="EventQueue.h">
       <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Shotgun.h">
+      <Filter>Header Files\Game\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="Gauss.h">
+      <Filter>Header Files\Game\Guns</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
