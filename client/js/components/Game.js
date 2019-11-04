@@ -137,7 +137,7 @@ class Game extends React.Component {
           return <Player source={entity} key={key} />;
           break;
         case 'Projectile':
-          const source = {
+          const projectileSource = {
             type: 'sprite',
             name: 'crossbowBolt',
             lifeTime: 100000,
@@ -146,7 +146,20 @@ class Game extends React.Component {
             angle: entity.angle,
           };
 
-          return <Particle source={source} key={key} />
+          return <Particle source={projectileSource} key={key} />
+          break;
+        case 'Rocket':
+          const rocketSource = {
+            type: 'sprite',
+            name: 'rocket',
+            lifeTime: 100000,
+            x: entity.x,
+            y: entity.y,
+            angle: entity.angle,
+          };
+
+          return <Particle source={rocketSource} key={key} />
+          break;
         default:
           return null;
       }

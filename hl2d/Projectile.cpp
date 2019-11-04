@@ -11,7 +11,7 @@ Projectile::Projectile(
 ) {
 	_startDamage = startDamage;
 	_endDamage = endDamage;
-	_radius = maxDistance;
+	_maxDistance = maxDistance;
 	_speed = speed;
 	_negatesPlayers = negatesPlayers;
 	_addedAngle = addedAngle;
@@ -59,7 +59,7 @@ void Projectile::update(
 
 	if (hitsPlayers) {
 		for (auto [player, _] : *playerHits) { //Dont need damage
-			double fallof = _distanceTravelled / _radius;
+			double fallof = _distanceTravelled / _maxDistance;
 			double damage = util::lerp(_startDamage, _endDamage, fallof);
 
 			player->hit((int)damage);
@@ -82,34 +82,9 @@ void Projectile::update(
 		_move(movement);
 		_distanceTravelled += movement.length();
 
-		if (_distanceTravelled > _radius) {
+		if (_distanceTravelled > _maxDistance) {
 			destroy();
 		}
-	}
-}
-
-void Projectile::_explode(list<Entity*>* entities) {
-	Vec2 explosion = getPosition();
-
-	for (auto entity : *entities) {
-		if (entity->getType() != "Player") {
-			//Ignore other entities
-			continue;
-		}
-
-		Player* player = (Player*)entity;
-
-		Vec2 playerPosition = player->getPosition();
-		double hitDistance = (playerPosition - explosion).length();
-		if (hitDistance > _radius) {
-			//Player is too far from explosion
-			continue;
-		}
-
-		double fallof = hitDistance / _radius;
-		double damage = util::lerp(_startDamage, _endDamage, fallof);
-
-		player->hit((int)damage);
 	}
 }
 

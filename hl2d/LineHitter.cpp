@@ -10,7 +10,7 @@ LineHitter::LineHitter(
 ) {
 	_startDamage = startDamage;
 	_endDamage = endDamage;
-	_radius = range;
+	_maxDistance = range;
 	_negatesCover = negatesCover;
 	_addedAngle = addedAngle;
 	_renderable = false;
@@ -32,13 +32,13 @@ void LineHitter::update(
 	string additionalInfo
 ) {
 	//Max hit distance (=hitscan line length)
-	double maxDistance = _radius;
+	double maxDistance = _maxDistance;
 	//Normalized direction vector
 	Vec2 d = Vec2::getNormalFromAngle(_angle);
 
 	if (!_negatesCover) {
 		maxDistance = LineHitter::getClosestDistanceToWall(
-			level, getPosition(), d, _radius);
+			level, getPosition(), d, _maxDistance);
 	}
 
 	//Get all hits on hit line
@@ -58,7 +58,7 @@ void LineHitter::update(
 	}
 	delete hits;
 
-	//Change radius to hit line length for presentation (we wont need it for
+	//Change radius to hit line length for presentation (we dont need it for
 	//anything else)
 	_radius = maxDistance;
 	_renderable = true;

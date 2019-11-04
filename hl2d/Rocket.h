@@ -1,18 +1,18 @@
 #pragma once
-
-#include "Hitter.h"
-#include "Player.h"
-
-class Projectile : public Hitter {
+#include "Projectile.h"
+class Rocket : public Projectile {
 public:
-	Projectile(
+	Rocket(
 		double maxDistance,
 		double speed,
 		int startDamage,
 		int endDamage,
 		bool negatesPlayers,
-		double addedAngle
+		double addedAngle,
+		double blastRadius
 	);
+
+	virtual string getJson() override;
 
 	virtual void activate(Player* player) override;
 
@@ -21,13 +21,9 @@ public:
 		list<Entity*>* entities,
 		string additionalInfo) override;
 protected:
-	double _startDamage, _endDamage;
-	bool _negatesPlayers;
-	double _maxDistance;
-	double _addedAngle;
-	double _speed;
+	double _blastRadius;
+	bool _exploded;
 
-	double _distanceTravelled;
-
-	void _move(Vec2 movement);
+	void _explode(list<Entity*>* entities);
 };
+

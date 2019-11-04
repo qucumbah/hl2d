@@ -46,4 +46,5 @@ protected:
 	double _startDamage, _endDamage;
 	bool _negatesCover;
 	double _addedAngle;
+	double _maxDistance;
 };

@@ -74,10 +74,23 @@ class ParticleSystem {
             x: newEntity.x,
             y: newEntity.y,
             width: newEntity.radius,
-            height: 5,
+            height: 2,
             angle: newEntity.angle,
           };
           break;
+        case 'Rocket':
+          if (!newEntity.exploded) {
+            return null;
+          }
+
+          return {
+            type: 'sprite',
+            name: 'explosion',
+            lifeTime: 1000,
+            x: newEntity.x,
+            y: newEntity.y,
+            angle: newEntity.angle,
+          }
         default:
           return null;
       }
