@@ -96,6 +96,12 @@
     <ClCompile Include="Gauss.cpp">
       <Filter>Source Files\Game\Guns</Filter>
     </ClCompile>
+    <ClCompile Include="Crossbow.cpp">
+      <Filter>Source Files\Game\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Socket.h">
@@ -156,6 +162,12 @@
       <Filter>Header Files\Game\Guns</Filter>
     </ClInclude>
     <ClInclude Include="Gauss.h">
+      <Filter>Header Files\Game\Guns</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Crossbow.h">
       <Filter>Header Files\Game\Guns</Filter>
     </ClInclude>
   </ItemGroup>

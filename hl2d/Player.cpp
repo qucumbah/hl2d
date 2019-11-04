@@ -7,6 +7,7 @@
 #include "Rifle.h"
 #include "Shotgun.h"
 #include "Gauss.h"
+#include "Crossbow.h"
 
 using std::string;
 using std::stringstream;
@@ -53,8 +54,9 @@ Player::Player(int id) {
 	_guns[1] = new Rifle(id);
 	_guns[2] = new Shotgun(id);
 	_guns[3] = new Gauss(id);
+	_guns[4] = new Crossbow(id);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		_guns[i]->on("shoot", [this](Hitter* hitter) {
 			this->shoot(hitter);
 		});

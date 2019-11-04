@@ -13,6 +13,7 @@ LineHitter::LineHitter(
 	_radius = range;
 	_negatesCover = negatesCover;
 	_addedAngle = addedAngle;
+	_renderable = false;
 }
 
 void LineHitter::activate(Player* player) {
@@ -22,8 +23,6 @@ void LineHitter::activate(Player* player) {
 	_x = player->getX();
 	_y = player->getY();
 	_angle = player->getAngle() + (_addedAngle / 180.0) * 3.14;
-	_radius = 800;
-	_renderable = false;
 	_creatorId = player->getId();
 }
 
@@ -38,11 +37,22 @@ void LineHitter::update(
 	Vec2 d = Vec2::getNormalFromAngle(_angle);
 
 	if (!_negatesCover) {
-		maxDistance = _getClosestDistanceToWall(level, d, _radius);
+		maxDistance = LineHitter::getClosestDistanceToWall(
+			level, getPosition(), d, _radius);
 	}
 
 	//Get all hits on hit line
-	auto hits = _getPlayerHits(level, entities, maxDistance);
+	auto hits = LineHitter::getPlayerHits(
+		level,
+		entities,
+		getPosition(),
+		d,
+		maxDistance,
+		_startDamage,
+		_endDamage,
+		_creatorId
+	);
+
 	for (auto [player, damage] : *hits) {
 		player->hit( damage );
 	}
@@ -57,54 +67,9 @@ void LineHitter::update(
 	destroy();
 }
 
-//LineHitter hits the every player on a line with length RANGE that is
-//aimed at where creator is looking; after first update it gets destroyed
-map<Player*, int>* LineHitter::_getPlayerHits(
-	Level* level, list<Entity*>* entities, double maxDistance
-) {
-	auto hits = new map<Player*, int>();
-
-	//Normalized direction vector
-	Vec2 d = Vec2::getNormalFromAngle(_angle);
-
-	for (auto entity : *entities) {
-		if (entity->getType() != "Player") {
-			//Ignore other entities
-			continue;
-		}
-
-		Player* player = (Player*)entity;
-		if (player->getId() == _creatorId) {
-			//Dont hit creator
-			continue;
-		}
-
-		Vec2 hit = Vec2::getIntersectionWithCircle(
-			getPosition(), d, player->getPosition(), player->getRadius()
-		);
-
-		if (!hit.isValid()) {
-			//Hit is invalid if there is no intersection
-			continue;
-		}
-
-		double hitDistance = (hit - getPosition()).length();
-		if (hitDistance > maxDistance) {
-			//Player is behind a wall (if negatesCover == false) or is too far
-			continue;
-		}
-
-		double fallof = hitDistance / maxDistance;
-		double damage = util::lerp(_startDamage, _endDamage, fallof);
-
-		(*hits)[player] = (int)damage;
-	}
-
-	return hits;
-}
-
-double LineHitter::_getClosestDistanceToWall(
+double LineHitter::getClosestDistanceToWall(
 	Level* level,
+	Vec2 position,
 	Vec2 direction,
 	double maxDistance
 ) {
@@ -113,7 +78,7 @@ double LineHitter::_getClosestDistanceToWall(
 
 	for (auto edge : level->getEdges()) {
 		double dist = Vec2::getIntersectionCoefficient(
-			getPosition(), direction, edge.start, edge.body
+			position, direction, edge.start, edge.body
 		);
 
 		if (dist >= 0 && dist < k) {
@@ -122,4 +87,54 @@ double LineHitter::_getClosestDistanceToWall(
 	}
 
 	return k;
+}
+
+//LineHitter hits the every player on a line with length RANGE that is
+//aimed at where creator is looking; after first update it gets destroyed
+map<Player*, int>* LineHitter::getPlayerHits(
+	Level* level,
+	list<Entity*>* entities,
+	Vec2 position,
+	Vec2 direction,
+	double maxDistance,
+	double startDamage,
+	double endDamage,
+	int creatorId
+) {
+	auto hits = new map<Player*, int>();
+
+	for (auto entity : *entities) {
+		if (entity->getType() != "Player") {
+			//Ignore other entities
+			continue;
+		}
+
+		Player* player = (Player*)entity;
+		if (player->getId() == creatorId) {
+			//Dont hit creator
+			continue;
+		}
+
+		Vec2 hit = Vec2::getIntersectionWithCircle(
+			position, direction, player->getPosition(), player->getRadius()
+		);
+
+		if (!hit.isValid()) {
+			//Hit is invalid if there is no intersection
+			continue;
+		}
+
+		double hitDistance = (hit - position).length();
+		if (hitDistance > maxDistance) {
+			//Player is behind a wall (if negatesCover == false) or is too far
+			continue;
+		}
+
+		double fallof = hitDistance / maxDistance;
+		double damage = util::lerp(startDamage, endDamage, fallof);
+
+		(*hits)[player] = (int)damage;
+	}
+
+	return hits;
 }

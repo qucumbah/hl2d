@@ -27,6 +27,7 @@ public:
 		pairs["radius"] = to_string(_radius);
 		pairs["x"] = to_string(_x);
 		pairs["y"] = to_string(_y);
+		pairs["id"] = to_string(_id);
 
 		string json = util::createJson(pairs);
 		return json;

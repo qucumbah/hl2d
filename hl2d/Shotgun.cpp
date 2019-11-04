@@ -8,7 +8,7 @@ void Shotgun::pullTrigger1() {
 	list<LineHitter*> pellets;
 	for (int i = -3; i <= 3; i++) {
 		pellets.push_back(
-			new LineHitter(250, 15, 5, false, i)
+			new LineHitter(500, 15, 5, false, i)
 		);
 	}
 
@@ -23,7 +23,7 @@ void Shotgun::pullTrigger2() {
 	list<LineHitter*> pellets;
 	for (int i = -6; i <= 6; i++) {
 		pellets.push_back(
-			new LineHitter(250, 15, 5, false, i / 2.0)
+			new LineHitter(500, 15, 5, false, i / 2.0)
 		);
 	}
 

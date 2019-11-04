@@ -134,8 +134,19 @@ class Game extends React.Component {
 
       switch (entity.type) {
         case 'Player':
-          return <Player key={key} source={entity} />;
+          return <Player source={entity} key={key} />;
           break;
+        case 'Projectile':
+          const source = {
+            type: 'sprite',
+            name: 'crossbowBolt',
+            lifeTime: 100000,
+            x: entity.x,
+            y: entity.y,
+            angle: entity.angle,
+          };
+
+          return <Particle source={source} key={key} />
         default:
           return null;
       }

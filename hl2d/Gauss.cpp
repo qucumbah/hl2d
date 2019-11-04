@@ -6,7 +6,7 @@ Gauss::Gauss(int ownerId) : Gun(ownerId) {
 }
 
 void Gauss::pullTrigger1() {
-
+	_shoot(_getLaser(1), COOLDOWN);
 }
 
 void Gauss::releaseTrigger1() {
@@ -41,6 +41,7 @@ void Gauss::_startCharging() {
 void Gauss::_stopCharging() {
 	_isCharging = false;
 	_shoot(_getLaser(_energyLevel), COOLDOWN);
+	_energyLevel = 1;
 }
 
 void Gauss::_charge() {
