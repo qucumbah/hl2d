@@ -17,4 +17,8 @@ public:
 	void releaseTrigger1() override;
 	void pullTrigger2() override;
 	void releaseTrigger2() override;
+
+	bool isInGuideMode();
+protected:
+	bool _isInGuideMode = true;
 };

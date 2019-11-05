@@ -10,6 +10,8 @@
 #include "Crossbow.h"
 #include "RocketLauncher.h"
 
+#include "LaserPointer.h"
+
 using std::string;
 using std::stringstream;
 using std::cout;
@@ -128,6 +130,13 @@ void Player::update(Level* level,
 	Vec2 bounce = _getLargestBounce(movement, level);
 
 	_move(movement + bounce);
+
+	if (_currentGun == 5) { //Rocket launcher
+		RocketLauncher* rocketLauncher = (RocketLauncher*)_guns[_currentGun];
+		if (rocketLauncher->isInGuideMode()) {
+			entities->push_back(new LaserPointer(_crosshairX, _crosshairY));
+		}
+	}
 }
 
 string Player::getJson() {

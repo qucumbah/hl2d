@@ -122,6 +122,7 @@
     <ClCompile Include="Crowbar.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gauss.cpp" />
+    <ClCompile Include="LaserPointer.cpp" />
     <ClCompile Include="LineHitter.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Gauss.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="EventQueue.h" />
+    <ClInclude Include="LaserPointer.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Rocket.h" />
     <ClInclude Include="RocketLauncher.h" />

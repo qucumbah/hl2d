@@ -21,9 +21,13 @@ void RocketLauncher::releaseTrigger1() {
 }
 
 void RocketLauncher::pullTrigger2() {
-
+	_isInGuideMode = !_isInGuideMode;
 }
 
 void RocketLauncher::releaseTrigger2() {
 
+}
+
+bool RocketLauncher::isInGuideMode() {
+	return _isInGuideMode;
 }

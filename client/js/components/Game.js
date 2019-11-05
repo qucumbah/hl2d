@@ -160,6 +160,17 @@ class Game extends React.Component {
 
           return <Particle source={rocketSource} key={key} />
           break;
+        case 'LaserPointer':
+          const laserSource =  {
+            type: 'sprite',
+            name: 'laser',
+            lifeTime: 100000,
+            x: entity.x,
+            y: entity.y,
+          };
+
+          return <Particle source={laserSource} key={key} />
+          break;
         default:
           return null;
       }
