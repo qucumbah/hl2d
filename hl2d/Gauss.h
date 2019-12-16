@@ -7,7 +7,7 @@ class Gauss : public Gun {
 public:
 	static const int COOLDOWN = 500;
 
-	static const int RANGE = 400;
+	static const int RANGE = 1500;
 	static const int MAX_ENERGY_LEVEL = 11;
 	static const int PENETRATION_THRESHOLD = 5;
 	static const int LOWEST_DAMAGE = 10;

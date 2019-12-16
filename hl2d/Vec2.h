@@ -75,6 +75,11 @@ public:
 		return Vec2(NAN, NAN);
 	}
 
+	static double getAngleBetween(Vec2 a, Vec2 b) {
+		//return acos( (a * b) / (a.length() * b.length()) );
+		return asin( (a ^ b) / (a.length() * b.length()) );
+	}
+
 	Vec2(double _x, double _y) : x(_x), y(_y) {
 
 	}

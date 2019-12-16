@@ -18,6 +18,7 @@ body {
   position: absolute;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   
   * {
     user-select: none;
@@ -25,15 +26,38 @@ body {
     -webkit-user-drag: none;
   }
 
-  .player {
+  .gameContent {
     position: absolute;
+  }
+}
+
+.player {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 50;
+
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50% - 80px);
+    img {
+      min-width: 30px;
+      min-height: 30px;
+    }
+  }
+
+  .sprite {
+    position: absolute;
+    top: 0;
+    left: 0;
     background-color: lightgreen;
     width: 15px;
     height: 15px;
     border-radius: 100px;
     border: 2px solid black;
     border-right: 2px solid red;
-    z-index: 50;
     box-sizing: border-box;
   }
 }

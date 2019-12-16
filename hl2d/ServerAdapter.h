@@ -18,6 +18,10 @@ private:
 	Game _game;
 	map<int, string>* _queuedInputs;
 
+	//Synchronization
+	int _tickTimerId;
+	bool _isExecutingGameTick = false;
+
 	void _handleFirstRequest(int clientId, string message);
 	void _handleRequest(int clientId, string message);
 

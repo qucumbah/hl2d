@@ -1,9 +1,9 @@
 #pragma once
-#include "Projectile.h"
+#include "Rocket.h"
 
-class Rocket : public Projectile {
+class GuidedRocket : public Rocket {
 public:
-	Rocket(
+	GuidedRocket(
 		double maxDistance,
 		double speed,
 		int startDamage,
@@ -13,18 +13,13 @@ public:
 		double blastRadius
 	);
 
-	virtual string getJson() override;
-
 	virtual void activate(Player* player) override;
 
 	virtual void update(
 		Level* level,
 		list<Entity*>* entities,
 		string additionalInfo) override;
+
 protected:
-	double _blastRadius;
-	bool _exploded;
-
-	void _explode(list<Entity*>* entities);
+	virtual double _getUpdatedAngle(Level* level, list<Entity*>* entities);
 };
-

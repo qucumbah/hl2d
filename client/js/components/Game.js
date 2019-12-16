@@ -57,7 +57,6 @@ class Game extends React.Component {
   }
 
   componentDidMount = () => {
-    this.gameRef.current.focus();
     this.startTickInterval();
   }
   componentWillUnmount = () => {
@@ -69,7 +68,7 @@ class Game extends React.Component {
       const actions = this.state.actions;
       this.setState({ actions: [] });
 
-      const crosshairPosition = this.state.crosshairPosition
+      const crosshairPosition = this.state.crosshairPosition;
 
       this.props.onTick(crosshairPosition, actions);
     }, TICKTIME);
@@ -82,6 +81,7 @@ class Game extends React.Component {
   }
 
   handleKeyDown = event => {
+    this.gameRef.current.focus();
     const keyCode = event.keyCode;
 
     if (keyboardMappings[keyCode]) {
@@ -89,6 +89,7 @@ class Game extends React.Component {
     }
   }
   handleKeyUp = event => {
+    this.gameRef.current.focus();
     const keyCode = event.keyCode;
 
     if (keyboardMappings[keyCode]) {
@@ -120,8 +121,18 @@ class Game extends React.Component {
     //console.log(event.pageX, event.pageY);
   }
 
-  recordCrosshairPosition = (x, y) => {
-    this.setState({ crosshairPosition: {x, y} });
+  recordCrosshairPosition = (mouseX, mouseY) => {
+    const crosshairPositionRelativeToPlayer = {
+      x: mouseX - this.props.playerPosition.x,
+      y: mouseY - this.props.playerPosition.y,
+    };
+    console.log(this.props.playerPosition);
+    this.setState({ crosshairPosition: crosshairPositionRelativeToPlayer });
+  }
+
+  handleMouseOver = () => {
+    //Autofocus property doesn't work, so I had to use this little hack
+    this.gameRef.current.focus();
   }
 
   mapEntities = entities => {
@@ -149,6 +160,7 @@ class Game extends React.Component {
           return <Particle source={projectileSource} key={key} />
           break;
         case 'Rocket':
+        case 'GuidedRocket':
           const rocketSource = {
             type: 'sprite',
             name: 'rocket',
@@ -184,18 +196,17 @@ class Game extends React.Component {
   }
 
   render() {
-    let entities, particles;
-    if (!this.props.entities) {
-      entities = null;
-    } else {
-      entities = this.mapEntities(this.props.entities);
-    }
+    const entities = this.mapEntities(this.props.entities);
+    const particles = this.mapParticles(this.props.particles);
 
-    if (!this.props.particles) {
-      particles = null;
-    } else {
-      particles = this.mapParticles(this.props.particles);
-    }
+    const centerOfScreenOffset = {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    };
+    const gameContentStyle = {
+      left: centerOfScreenOffset.x - this.props.playerPosition.x + 'px',
+      top: centerOfScreenOffset.y - this.props.playerPosition.y + 'px',
+    };
 
     return (
       <div
@@ -206,12 +217,15 @@ class Game extends React.Component {
         onMouseMove={this.handleMouseMove}
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
+        onMouseOver={this.handleMouseOver}
         ref={this.gameRef}
         onContextMenu={event => event.preventDefault()} //Block rmb context menu
       >
-        {entities}
-        {particles}
-        <Level source={this.props.map} />
+        <div className="gameContent" style={gameContentStyle}>
+          {entities}
+          {particles}
+          <Level source={this.props.map} />
+        </div>
       </div>
     );
   }
@@ -227,8 +241,11 @@ Game.propTypes = {
     })
   ).isRequired,
   entities: PropTypes.arrayOf(
-    PropTypes.shape({ renderable: PropTypes.bool })
-  ),
+    PropTypes.shape({
+      renderable: PropTypes.bool.isRequired,
+      id: PropTypes.number,
+    })
+  ).isRequired,
   particles: PropTypes.arrayOf(
     PropTypes.shape({
       x: PropTypes.number,
@@ -236,8 +253,11 @@ Game.propTypes = {
       name: PropTypes.string,
       lifeTime: PropTypes.number,
     })
-  ),
-  playerId: PropTypes.number,
+  ).isRequired,
+  playerPosition: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }).isRequired,
   onTick: PropTypes.func.isRequired,
 };
 

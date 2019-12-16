@@ -94,7 +94,7 @@ class App extends React.Component {
         ws,
         lastAdress: adress,
         lastName: name,
-        connectionState: WebSocket.OPEN,
+        connectionState: WebSocket.CONNECTING,
         map: mapObj,
         playerId: id
       });
@@ -148,13 +148,26 @@ class App extends React.Component {
     } catch (exception) {
       console.log(exception);
     }
+    
+    const player = entities.find( entity => entity.id === this.state.playerId );
 
     particleSystem.update(entities);
     const particles = particleSystem.getParticles();
 
-    this.setState({ entities, particles });
-
-    //console.log(message);
+    if (this.state.connectionState === WebSocket.OPEN) {
+      this.setState({
+        entities,
+        particles,
+        player,
+      });
+    } else {
+      this.setState({
+        entities,
+        particles,
+        player,
+        connectionState: WebSocket.OPEN,
+      });
+    }
   }
 
   displayError = errorMessage => {
@@ -177,11 +190,6 @@ class App extends React.Component {
       playerControls.join('\n')
     );
 
-    //console.log(message);
-
-    //console.log(this.state.counter + 1);
-    this.setState({ counter: this.state.counter + 1 });
-
     this.state.ws.send(message);
   }
 
@@ -197,12 +205,25 @@ class App extends React.Component {
         />
       );
     } else {
+      let playerPosition;
+      if (this.state.player) {
+        playerPosition = {
+          x: this.state.player.x,
+          y: this.state.player.y,
+        };
+      } else {
+        playerPosition = {
+          x: 0,
+          y: 0,
+        };
+      }
+      
       content = (
         <Game
           map={this.state.map}
           entities={this.state.entities}
           particles={this.state.particles}
-          playerId={this.state.playerId}
+          playerPosition={playerPosition}
           onTick={this.sendTickInfo}
         />
       );

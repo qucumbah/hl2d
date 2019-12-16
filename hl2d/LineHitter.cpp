@@ -52,9 +52,16 @@ void LineHitter::update(
 		_endDamage,
 		_creatorId
 	);
-
+	/*
+	//Cant use some C++17 features in class, had to rewrite
 	for (auto [player, damage] : *hits) {
 		player->hit( damage );
+	}
+	*/
+	for (auto pair : *hits) {
+		auto player = pair.first;
+		auto damage = pair.second;
+		player->hit(damage);
 	}
 	delete hits;
 

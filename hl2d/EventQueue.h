@@ -51,6 +51,10 @@ public:
 
 		return id;
 	}
+
+	static void cancel(int actionId) {
+		_actions.erase(actionId);
+	}
 private:
 	//Block constructor
 	EventQueue() {}
@@ -79,7 +83,12 @@ private:
 			auto actionsCopy = _actions;
 			_actions.clear();
 			auto checkedActions = _check(actionsCopy);
-			_actions.merge(checkedActions);
+			
+			//_actions.merge(checkedActions);
+
+			for (auto action : checkedActions) {
+				_actions[action.first] = action.second;
+			}
 		}
 	}
 

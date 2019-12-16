@@ -31,7 +31,9 @@ Level::Level(string name) {
 			mapFile >> x1 >> y1 >> x2 >> y2;
 			//x1,y1 is top left, x2,y2 is bottom right
 			if (x1 > x2 || y1 > y2) {
-				throw std::invalid_argument("Map file has invalid format");
+				string errorMessage =
+					string("Map file contained wall with wrong coordinates");
+				throw std::invalid_argument(errorMessage);
 			}
 
 			//Create JSON representation of a wall
@@ -62,7 +64,8 @@ Level::Level(string name) {
 			_addSpawnLocation(x1, y1);
 		}
 		else {
-			throw std::invalid_argument("Map file has invalid format");
+			string errorMessage = string("Unknown map file token: ") + token;
+			throw std::invalid_argument(errorMessage);
 		}
 	}
 
@@ -86,7 +89,7 @@ list<Level::Edge> Level::getEdges() {
 	return _edges;
 }
 
-list<Level::Location> Level::getSpawnLocations() {
+vector<Level::Location> Level::getSpawnLocations() {
 	return _spawnLocations;
 }
 

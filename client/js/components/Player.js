@@ -1,29 +1,39 @@
+import GunIcon from './GunIcon.js';
+
 const Player = function(props) {
-  const x = props.source.x;
-  const y = props.source.y;
-  const angle = props.source.angle;
+  const {x, y, angle, health, name, currentGun} = props.source;
+  //console.log(props.source);
 
-  const hp = props.source.health;
-
-  const style = {
-    display: (hp>0)?'block':'none',
-    transform: `translate(-50%, -50%) rotate(${angle}rad)`,
+  const playerContainerStyle = {
+    display: (health > 0) ? 'block' : 'none',
     left: x + 'px',
     top: y + 'px',
+  }
+  const playerSpriteStyle = {
+    transform: `translate(-50%, -50%) rotate(${angle}rad)`,
   };
 
   return (
-    <div className="player" style={style}></div>
+    <div className="player" style={playerContainerStyle}>
+      <div className="info">
+        <div className="name">{name}<br />HP:{health}</div>
+        <div className="health"></div>
+        <GunIcon gunId={currentGun} size="30px" />
+      </div>
+      <div className="sprite" style={playerSpriteStyle}></div>
+    </div>
   );
 };
 
 Player.propTypes = {
   source: PropTypes.shape({
-    renderable: PropTypes.bool,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    angle: PropTypes.number,
-    hp: PropTypes.number,
+    renderable: PropTypes.bool.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+    angle: PropTypes.number.isRequired,
+    health: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    currentGun: PropTypes.number.isRequired,
   }).isRequired
 };
 

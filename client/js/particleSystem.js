@@ -79,6 +79,7 @@ class ParticleSystem {
           };
           break;
         case 'Rocket':
+        case 'GuidedRocket':
           if (!newEntity.exploded) {
             return null;
           }

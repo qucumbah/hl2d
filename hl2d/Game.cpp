@@ -5,13 +5,20 @@
 #include <iostream>
 
 using std::list;
+using std::vector;
 using std::string;
 using std::stringstream;
 using std::cout;
 using std::endl;
+using std::exception;
 
 Game::Game() {
-	_level = new Level("a");
+	try {
+		_level = new Level("a");
+	}
+	catch (exception& ex) {
+		cout << ex.what() << endl;
+	}
 }
 
 Game::~Game() {
@@ -72,7 +79,15 @@ void Game::removeEntity(Entity* entity) {
 }
 
 void Game::respawnPlayer(Player* player) {
-	player->respawn(0, 0);
+	vector<Level::Location> spawnLocations = _level->getSpawnLocations();
+	if (spawnLocations.size() == 0) {
+		player->respawn(0, 0);
+		return;
+	}
+
+	int locationNumber = rand() % spawnLocations.size();
+	Level::Location spawnLocation = spawnLocations[locationNumber];
+	player->respawn(spawnLocation.x, spawnLocation.y);
 }
 
 string Game::getLevelJson() {
@@ -126,7 +141,9 @@ void Game::update(map<int, string>* playerActions) {
 			Player* player = (Player*)entity;
 			player->update(_level, &_entitiesBuffer, thisPlayerActions);
 			if (!player->isAlive()) {
-				respawnPlayer(player);
+				EventQueue::after(3000, [this, player]() {
+					respawnPlayer(player);
+				});
 			}
 		}
 		else {

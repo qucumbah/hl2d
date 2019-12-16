@@ -6,13 +6,8 @@ using std::stringstream;
 
 ServerAdapter::ServerAdapter() {
 	_queuedInputs = new map<int, string>();
-	/*
-	_tickTimer = new Timer(
-		[this]() { this->_tick(); },
-		TICKTIME
-	);
-	*/
-	EventQueue::every(TICKTIME, [this]() { this->_tick(); });
+
+	_tickTimerId = EventQueue::every(TICKTIME, [this]() { this->_tick(); });
 
 	_wss.on("clientConnect", [this](int clientId, string message) {
 		this->_game.addUnconfirmedPlayer(clientId);
@@ -33,6 +28,10 @@ ServerAdapter::ServerAdapter() {
 }
 
 ServerAdapter::~ServerAdapter() {
+	EventQueue::cancel(_tickTimerId);
+	while (_isExecutingGameTick) {
+		Sleep(10);
+	}
 }
 
 void ServerAdapter::_handleFirstRequest(int clientId, string message) {
@@ -66,6 +65,8 @@ void ServerAdapter::_handleRequest(int clientId, string message) {
 }
 
 void ServerAdapter::_tick() {
+	_isExecutingGameTick = true;
+
 	string gameState = this->_game.getJson();
 	this->_wss.sendMessageAll(gameState);
 
@@ -79,8 +80,10 @@ void ServerAdapter::_tick() {
 	//messages would get skipped because queued inputs would be cleaned after
 	//update.
 	//After this simple fix there are much less lost packages
-	auto inputs = _queuedInputs;
+	map<int, string>* inputs = _queuedInputs;
 	_queuedInputs = new map<int, string>();
 	this->_game.update(inputs);
 	delete inputs;
+
+	_isExecutingGameTick = false;
 }

@@ -105,11 +105,14 @@
     <ClCompile Include="Rocket.cpp">
       <Filter>Source Files\Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="RocketLauncher.cpp">
-      <Filter>Source Files\Game\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="LaserPointer.cpp">
       <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="GuidedRocket.cpp">
+      <Filter>Source Files\Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="RocketLauncher.cpp">
+      <Filter>Source Files\Game\Guns</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,11 +185,14 @@
     <ClInclude Include="Rocket.h">
       <Filter>Header Files\Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="RocketLauncher.h">
-      <Filter>Header Files\Game\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="LaserPointer.h">
       <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="GuidedRocket.h">
+      <Filter>Header Files\Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="RocketLauncher.h">
+      <Filter>Header Files\Game\Guns</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

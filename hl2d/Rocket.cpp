@@ -69,6 +69,10 @@ void Rocket::update(
 	bool hitsWall = closestDistanceToWall < _speed;
 	bool hitsPlayers = playerHits->size() > 0;
 
+	if (hitsPlayers) {
+		cout << "" << endl;
+	}
+
 	if (hitsWall || hitsPlayers) {
 		_explode(entities);
 		_exploded = true;

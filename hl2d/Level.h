@@ -4,9 +4,11 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 using std::string;
 using std::list;
+using std::vector;
 
 class Level {
 public:
@@ -39,12 +41,12 @@ public:
 	string getJson();
 
 	list<Level::Edge> getEdges();
-	list<Level::Location> getSpawnLocations();
+	vector<Level::Location> getSpawnLocations();
 private:
 	string _json;
 
 	list<Edge> _edges;
-	list<Location> _spawnLocations;
+	vector<Location> _spawnLocations;
 
 	void _addEdge(double x1, double y1, double x2, double y2);
 	void _addSpawnLocation(double x, double y);

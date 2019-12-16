@@ -5,7 +5,8 @@ RocketLauncher::RocketLauncher(int ownerId) : Gun(ownerId) {
 }
 
 void RocketLauncher::pullTrigger1() {
-	_shoot(new Rocket(
+	//_shoot(new Rocket(
+	_shoot(new GuidedRocket(
 		MAX_DISTANCE,
 		SPEED,
 		START_DAMAGE,

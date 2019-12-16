@@ -15,7 +15,6 @@ WebsocketServer::WebsocketServer() {
 	
 	function<void(int, char*, int)> acceptHandler =
 	[this](int clientSocket, char* message, int length) {
-
 		this->_acceptClient(clientSocket, message, length);
 	};
 	generalSocket->on("accept", acceptHandler);

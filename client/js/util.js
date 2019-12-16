@@ -17,6 +17,15 @@ class Util {
   }
 
   jsonReviewer = (key, value) => {
+    if (value instanceof Array) {
+      //This is not too beautiful but...
+      //isNaN([]) = false
+      //isNaN([1]) = false
+      //isNaN([1, 2]) = true
+      //And there is no better fix that I can think of
+      return value;
+    }
+
     value = this.convertNumbers(value);
     value = this.convertBooleans(value);
     return value;
