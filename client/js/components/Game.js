@@ -118,16 +118,26 @@ class Game extends React.Component {
 
   handleMouseMove = event => {
     this.recordCrosshairPosition(event.pageX, event.pageY);
-    //console.log(event.pageX, event.pageY);
   }
 
   recordCrosshairPosition = (mouseX, mouseY) => {
-    const crosshairPositionRelativeToPlayer = {
-      x: mouseX - this.props.playerPosition.x,
-      y: mouseY - this.props.playerPosition.y,
+    const gameContentOffset = this.getGameContentOffset();
+    const relativeCrosshairPosition = {
+      x: Math.round( mouseX - gameContentOffset.x ),
+      y: Math.round( mouseY - gameContentOffset.y ),
     };
-    console.log(this.props.playerPosition);
-    this.setState({ crosshairPosition: crosshairPositionRelativeToPlayer });
+    this.setState({ crosshairPosition: relativeCrosshairPosition });
+  }
+
+  getGameContentOffset = () => {
+    const centerOfScreenOffset = {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    };
+    return {
+      x: centerOfScreenOffset.x - this.props.playerPosition.x,
+      y: centerOfScreenOffset.y - this.props.playerPosition.y,
+    };
   }
 
   handleMouseOver = () => {
@@ -199,13 +209,10 @@ class Game extends React.Component {
     const entities = this.mapEntities(this.props.entities);
     const particles = this.mapParticles(this.props.particles);
 
-    const centerOfScreenOffset = {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    };
+    const gameContentOffset = this.getGameContentOffset();
     const gameContentStyle = {
-      left: centerOfScreenOffset.x - this.props.playerPosition.x + 'px',
-      top: centerOfScreenOffset.y - this.props.playerPosition.y + 'px',
+      left: gameContentOffset.x + 'px',
+      top: gameContentOffset.y + 'px',
     };
 
     return (
