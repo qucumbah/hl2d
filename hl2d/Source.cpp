@@ -10,8 +10,6 @@
 #include "EventQueue.h"
 #include "EventEmitter.h"
 
-using namespace std;
-
 int main() {
 	util::startWinsock();
 	EventQueue::initialize();

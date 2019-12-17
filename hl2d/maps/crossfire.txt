@@ -1,0 +1,52 @@
+# World border
+wall 0 0 1000 10
+wall 0 0 10 1000
+wall 1000 0 1010 1000
+wall 0 1000 1010 1010
+
+# Left house top
+wall 0 150 300 160
+wall 300 150 310 410
+wall 100 400 300 410
+wall 0 400 50 410
+# Left house bottom
+wall 100 500 300 510
+wall 0 500 50 510
+wall 300 500 310 600
+wall 300 700 310 900
+wall 0 700 160 800
+wall 150 890 300 900
+
+# Top house
+wall 500 10 510 250
+wall 500 300 510 350
+wall 500 350 760 360
+wall 750 10 760 250
+wall 750 300 760 350
+wall 510 200 600 210
+wall 650 200 750 210
+
+# Bottom house
+wall 500 950 510 1000
+wall 500 850 510 900
+wall 500 850 850 860
+wall 500 850 850 860
+wall 750 600 760 850
+wall 750 600 850 610
+wall 900 600 1000 610
+wall 940 520 970 600
+
+# Middle
+wall 475 530 485 730
+wall 475 400 760 410
+
+# Spawns
+spawn 80 80 # Top left
+spawn 700 100 # Top house
+spawn 500 500 # Middle
+spawn 800 60 # Top right
+spawn 990 575 # Right
+spawn 800 800 # Bottom house
+spawn 240 560 # Bottom left house
+spawn 240 340 # Top left house
+spawn 60 960 # Bottom right

@@ -14,7 +14,7 @@ using std::exception;
 
 Game::Game() {
 	try {
-		_level = new Level("a");
+		_level = new Level("crossfire");
 	}
 	catch (exception& ex) {
 		cout << ex.what() << endl;
@@ -88,6 +88,7 @@ void Game::respawnPlayer(Player* player) {
 	int locationNumber = rand() % spawnLocations.size();
 	Level::Location spawnLocation = spawnLocations[locationNumber];
 	player->respawn(spawnLocation.x, spawnLocation.y);
+	cout << "respawned; isAlive: " << player->isAlive() << endl;
 }
 
 string Game::getLevelJson() {
@@ -140,7 +141,8 @@ void Game::update(map<int, string>* playerActions) {
 
 			Player* player = (Player*)entity;
 			player->update(_level, &_entitiesBuffer, thisPlayerActions);
-			if (!player->isAlive()) {
+			if (!player->isAlive() && !player->isWaitingForRespawn()) {
+				player->prepareForRespawn();
 				EventQueue::after(3000, [this, player]() {
 					respawnPlayer(player);
 				});

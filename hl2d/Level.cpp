@@ -57,11 +57,16 @@ Level::Level(string name) {
 			_addEdge(x2, y2, x2, y1);
 			_addEdge(x2, y1, x1, y1);
 		}
-		else if (token == "spawnLocation") {
+		else if (token == "spawn") {
 			mapFile >> x1 >> y1;
 
 			//Dont need to visually represent spawn locations
 			_addSpawnLocation(x1, y1);
+		}
+		else if (token[0] == '#') {
+			//Skip comments
+			string comment;
+			std::getline(mapFile, comment);
 		}
 		else {
 			string errorMessage = string("Unknown map file token: ") + token;
@@ -103,5 +108,6 @@ void Level::_addEdge(double x1, double y1, double x2, double y2) {
 }
 
 void Level::_addSpawnLocation(double x, double y) {
-	_spawnLocations.push_back(Level::Location(x, y, 0) );
+	_spawnLocations.push_back( Level::Location(x, y, 0) );
+	cout << _spawnLocations.size() << endl;
 }

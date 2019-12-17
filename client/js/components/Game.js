@@ -87,6 +87,10 @@ class Game extends React.Component {
     if (keyboardMappings[keyCode]) {
       this.recordAction( +keyboardMappings[keyCode] );
     }
+
+    if (keyCode === 67) {
+      console.log(this.props.playerPosition);
+    }
   }
   handleKeyUp = event => {
     this.gameRef.current.focus();

@@ -67,7 +67,8 @@ Player::Player(int id) {
 	}
 
 	_currentGun = 0;
-	_health = 100; ///Dead on creation
+	_health = 0; ///Dead on creation
+	_isWaitingForRespawn = false;
 }
 
 Player::~Player() {
@@ -162,7 +163,11 @@ int Player::getConnectionStatus() {
 }
 
 bool Player::isAlive() {
-	return _health>0;
+	return _health > 0;
+}
+
+bool Player::isWaitingForRespawn() {
+	return _isWaitingForRespawn;
 }
 
 void Player::hit(int amount) {
@@ -172,11 +177,16 @@ void Player::hit(int amount) {
 	}
 }
 
+void Player::prepareForRespawn() {
+	_isWaitingForRespawn = true;
+}
+
 void Player::respawn(double x, double y) {
 	_x = x;
 	_y = y;
 
 	_health = MAX_HEALTH;
+	_isWaitingForRespawn = false;
 }
 
 void Player::shoot(Hitter* hitter) {

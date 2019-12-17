@@ -35,8 +35,10 @@ public:
 	int getConnectionStatus();
 
 	bool isAlive();
+	bool isWaitingForRespawn();
 
 	void hit(int amount);
+	void prepareForRespawn();
 	void respawn(double x, double y);
 
 	void shoot(Hitter* hitter);
@@ -48,6 +50,7 @@ private:
 	Gun** _guns;
 	int _currentGun;
 	int _health;
+	bool _isWaitingForRespawn;
 
 	list<Hitter*> _shotHitters;
 

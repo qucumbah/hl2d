@@ -55,7 +55,7 @@ void Rocket::update(
 		level, getPosition(), d, _speed
 	);
 
-	auto playerHits = LineHitter::getPlayerHits(
+	map<Player*, int>* playerHits = LineHitter::getPlayerHits(
 		level,
 		entities,
 		getPosition(),
@@ -68,10 +68,6 @@ void Rocket::update(
 
 	bool hitsWall = closestDistanceToWall < _speed;
 	bool hitsPlayers = playerHits->size() > 0;
-
-	if (hitsPlayers) {
-		cout << "" << endl;
-	}
 
 	if (hitsWall || hitsPlayers) {
 		_explode(entities);

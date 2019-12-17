@@ -1,0 +1,12 @@
+# World border
+wall 0 0 1000 10
+wall 0 0 10 1000
+wall 1000 0 1010 1000
+wall 0 1000 1010 1010
+
+# Spawns
+spawn 100 100
+spawn 900 100
+spawn 100 900
+spawn 900 900
+spawn 500 500

@@ -87,9 +87,6 @@
     <ClCompile Include="Level.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="EventQueue.cpp">
-      <Filter>Source Files\Game\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Shotgun.cpp">
       <Filter>Source Files\Game\Guns</Filter>
     </ClCompile>
@@ -113,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="RocketLauncher.cpp">
       <Filter>Source Files\Game\Guns</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>Source Files\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
